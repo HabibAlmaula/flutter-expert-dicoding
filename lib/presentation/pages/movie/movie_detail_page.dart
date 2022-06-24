@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/genre.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/domain/entities/movie/genre.dart';
+import 'package:ditonton/domain/entities/movie/movie.dart';
+import 'package:ditonton/domain/entities/movie/movie_detail.dart';
+import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
+import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
 
   final int id;
+
   MovieDetailPage({required this.id});
 
   @override
@@ -112,11 +114,18 @@ class DetailContent extends StatelessWidget {
                                           context,
                                           listen: false)
                                       .addWatchlist(movie);
+                                  Provider.of<WatchlistMovieNotifier>(context,
+                                          listen: false)
+                                      .fetchWatchlistMovies();
                                 } else {
                                   await Provider.of<MovieDetailNotifier>(
                                           context,
                                           listen: false)
                                       .removeFromWatchlist(movie);
+
+                                  Provider.of<WatchlistMovieNotifier>(context,
+                                          listen: false)
+                                      .fetchWatchlistMovies();
                                 }
 
                                 final message =
