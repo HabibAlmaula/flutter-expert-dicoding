@@ -52,14 +52,15 @@ class MainPage extends StatelessWidget {
               index: provider.currentTabIndex,
             ),
             bottomNavigationBar: BottomNavigationBar(
-              fixedColor: Colors.black87,
+              // fixedColor: Colors.black87,
               elevation: 10,
               type: BottomNavigationBarType.fixed,
               items: bottomNavigationBarItems,
-              // selectedLabelStyle: poppinsLight.copyWith(
-              //     fontSize: 13.0,
-              //     fontWeight: FontWeight.bold,
-              //     color: pinBlack_60),
+              selectedItemColor: Colors.purple,
+              selectedLabelStyle: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  ),
               // unselectedLabelStyle: poppinsLight.copyWith(fontSize: 12.0),
               currentIndex: provider.currentTabIndex,
               onTap: (page) {

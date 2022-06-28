@@ -1,7 +1,7 @@
 import 'package:ditonton/data/models/screen_model.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
+import 'package:ditonton/presentation/pages/main_watch_list.dart';
 import 'package:ditonton/presentation/pages/movie/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/movie/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv/home_tv_page.dart';
 import 'package:ditonton/presentation/widgets/exit_dialog.dart';
 import 'package:flutter/material.dart';
@@ -69,19 +69,19 @@ class NavigationProvider extends ChangeNotifier {
       scrollController: ScrollController(),
     ),
     THIRD_SCREEN: Screen(
-      title: 'Favorite',
+      title: 'Watchlist',
       icon: Icon(Icons.favorite),
       iconActive: Icon(
         Icons.favorite,
         color: Colors.purple,
       ),
-      child: WatchlistMoviesPage(),
-      initialRoute: WatchlistMoviesPage.ROUTE_NAME,
+      child: MainWatchList(),
+      initialRoute: MainWatchList.routeName,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           default:
-            return MaterialPageRoute(builder: (_) => WatchlistMoviesPage());
+            return MaterialPageRoute(builder: (_) => MainWatchList());
         }
       },
       scrollController: ScrollController(),

@@ -7,21 +7,14 @@ class TvDetail extends Equatable {
   TvDetail({
     required this.adult,
     required this.backdropPath,
-    required this.createdBy,
-    required this.episodeRunTime,
-    required this.firstAirDate,
     required this.genres,
     required this.homepage,
     required this.id,
     required this.inProduction,
-    required this.languages,
-    required this.lastAirDate,
     required this.lastEpisodeToAir,
     required this.name,
-    required this.nextEpisodeToAir,
     required this.numberOfEpisodes,
     required this.numberOfSeasons,
-    required this.originCountry,
     required this.originalLanguage,
     required this.originalName,
     required this.overview,
@@ -37,21 +30,14 @@ class TvDetail extends Equatable {
 
   bool adult;
   String backdropPath;
-  List<dynamic> createdBy;
-  List<int> episodeRunTime;
-  DateTime firstAirDate;
   List<Genre> genres;
   String homepage;
   int id;
   bool inProduction;
-  List<String> languages;
-  DateTime lastAirDate;
   LastEpisodeToAir lastEpisodeToAir;
   String name;
-  dynamic nextEpisodeToAir;
   int numberOfEpisodes;
   int numberOfSeasons;
-  List<String> originCountry;
   String originalLanguage;
   String originalName;
   String overview;
@@ -68,21 +54,14 @@ class TvDetail extends Equatable {
   List<Object?> get props => [
         adult,
         backdropPath,
-        createdBy,
-        episodeRunTime,
-        firstAirDate,
         genres,
         homepage,
         id,
         inProduction,
-        languages,
-        lastAirDate,
         lastEpisodeToAir,
         name,
-        nextEpisodeToAir,
         numberOfEpisodes,
         numberOfSeasons,
-        originCountry,
         originalLanguage,
         originalName,
         overview,

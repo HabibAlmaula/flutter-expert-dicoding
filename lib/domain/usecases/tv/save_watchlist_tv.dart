@@ -9,6 +9,6 @@ class SaveWatchlistTv {
   SaveWatchlistTv(this.repository);
 
   Future<Either<Failure, String>> execute(TvDetail tv) {
-    return repository.saveWatchlist(tv);
+    return repository.saveWatchlistTv(tv);
   }
 }

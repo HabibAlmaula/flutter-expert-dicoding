@@ -50,9 +50,9 @@ class TvListNotifier extends ChangeNotifier {
         _message = failure.message;
         notifyListeners();
       },
-      (TvData) {
+      (tvData) {
         _nowPlayingState = RequestState.Loaded;
-        _nowPlayingTv = TvData;
+        _nowPlayingTv = tvData;
         notifyListeners();
       },
     );
@@ -69,9 +69,9 @@ class TvListNotifier extends ChangeNotifier {
         _message = failure.message;
         notifyListeners();
       },
-      (TvData) {
+      (tvData) {
         _popularTvState = RequestState.Loaded;
-        _popularTv = TvData;
+        _popularTv = tvData;
         notifyListeners();
       },
     );
@@ -88,9 +88,9 @@ class TvListNotifier extends ChangeNotifier {
         _message = failure.message;
         notifyListeners();
       },
-      (TvData) {
+      (tvData) {
         _topRatedTvState = RequestState.Loaded;
-        _topRatedTv = TvData;
+        _topRatedTv = tvData;
         notifyListeners();
       },
     );

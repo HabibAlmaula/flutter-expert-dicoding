@@ -35,6 +35,10 @@ class _$AppRouter extends RootStackRouter {
     SearchRoute.name: (routeData) {
       return MaterialPageX<dynamic>(routeData: routeData, child: SearchPage());
     },
+    SearchTvRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: SearchTvPage());
+    },
     PopularMoviesRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
           routeData: routeData, child: PopularMoviesPage());
@@ -47,6 +51,19 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<MovieDetailRouteArgs>();
       return MaterialPageX<dynamic>(
           routeData: routeData, child: MovieDetailPage(id: args.id));
+    },
+    TvDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<TvDetailRouteArgs>();
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: TvDetailPage(id: args.id));
+    },
+    PopularTvRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: PopularTvPage());
+    },
+    TopRatedTvRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+          routeData: routeData, child: TopRatedTvPage());
     }
   };
 
@@ -54,21 +71,34 @@ class _$AppRouter extends RootStackRouter {
   List<RouteConfig> get routes => [
         RouteConfig('/#redirect',
             path: '/', redirectTo: '/splash-page', fullMatch: true),
-        RouteConfig(SplashRoute.name, path: '/splash-page', children: [
-          RouteConfig('*#redirect',
-              path: '*',
-              parent: SplashRoute.name,
-              redirectTo: '',
-              fullMatch: true)
-        ]),
-        RouteConfig(MainRoute.name, path: '/main-page'),
-        RouteConfig(HomeMovieRoute.name, path: '/home-movie'),
-        RouteConfig(HomeTvRoute.name, path: '/home-tv'),
-        RouteConfig(SearchRoute.name, path: '/search'),
-        RouteConfig(SearchRoute.name, path: '/search'),
-        RouteConfig(PopularMoviesRoute.name, path: '/popular-movie'),
-        RouteConfig(TopRatedMoviesRoute.name, path: '/top-rated-movie'),
-        RouteConfig(MovieDetailRoute.name, path: '/detail')
+        RouteConfig(SplashRoute.name,
+            path: '/splash-page',
+            usesPathAsKey: true,
+            children: [
+              RouteConfig('*#redirect',
+                  path: '*',
+                  parent: SplashRoute.name,
+                  redirectTo: '',
+                  fullMatch: true)
+            ]),
+        RouteConfig(MainRoute.name, path: '/main-page', usesPathAsKey: true),
+        RouteConfig(HomeMovieRoute.name, path: '/movie', usesPathAsKey: true),
+        RouteConfig(HomeTvRoute.name, path: '/home-tv', usesPathAsKey: true),
+        RouteConfig(SearchRoute.name, path: '/search', usesPathAsKey: true),
+        RouteConfig(SearchTvRoute.name,
+            path: '/search-tv', usesPathAsKey: true),
+        RouteConfig(PopularMoviesRoute.name,
+            path: '/popular-movie', usesPathAsKey: true),
+        RouteConfig(TopRatedMoviesRoute.name,
+            path: '/top-rated-movie', usesPathAsKey: true),
+        RouteConfig(MovieDetailRoute.name,
+            path: '/detail-movie', usesPathAsKey: true),
+        RouteConfig(TvDetailRoute.name,
+            path: '/detail-tv/:id', usesPathAsKey: true),
+        RouteConfig(PopularTvRoute.name,
+            path: '/popular-tv', usesPathAsKey: true),
+        RouteConfig(TopRatedTvRoute.name,
+            path: '/top-rated-tv', usesPathAsKey: true)
       ];
 }
 
@@ -93,7 +123,7 @@ class MainRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [HomeMoviePage]
 class HomeMovieRoute extends PageRouteInfo<void> {
-  const HomeMovieRoute() : super(HomeMovieRoute.name, path: '/home-movie');
+  const HomeMovieRoute() : super(HomeMovieRoute.name, path: '/movie');
 
   static const String name = 'HomeMovieRoute';
 }
@@ -112,6 +142,14 @@ class SearchRoute extends PageRouteInfo<void> {
   const SearchRoute() : super(SearchRoute.name, path: '/search');
 
   static const String name = 'SearchRoute';
+}
+
+/// generated route for
+/// [SearchTvPage]
+class SearchTvRoute extends PageRouteInfo<void> {
+  const SearchTvRoute() : super(SearchTvRoute.name, path: '/search-tv');
+
+  static const String name = 'SearchTvRoute';
 }
 
 /// generated route for
@@ -137,7 +175,7 @@ class TopRatedMoviesRoute extends PageRouteInfo<void> {
 class MovieDetailRoute extends PageRouteInfo<MovieDetailRouteArgs> {
   MovieDetailRoute({required int id})
       : super(MovieDetailRoute.name,
-            path: '/detail', args: MovieDetailRouteArgs(id: id));
+            path: '/detail-movie', args: MovieDetailRouteArgs(id: id));
 
   static const String name = 'MovieDetailRoute';
 }
@@ -151,4 +189,41 @@ class MovieDetailRouteArgs {
   String toString() {
     return 'MovieDetailRouteArgs{id: $id}';
   }
+}
+
+/// generated route for
+/// [TvDetailPage]
+class TvDetailRoute extends PageRouteInfo<TvDetailRouteArgs> {
+  TvDetailRoute({required int id})
+      : super(TvDetailRoute.name,
+            path: '/detail-tv/:id', args: TvDetailRouteArgs(id: id));
+
+  static const String name = 'TvDetailRoute';
+}
+
+class TvDetailRouteArgs {
+  const TvDetailRouteArgs({required this.id});
+
+  final int id;
+
+  @override
+  String toString() {
+    return 'TvDetailRouteArgs{id: $id}';
+  }
+}
+
+/// generated route for
+/// [PopularTvPage]
+class PopularTvRoute extends PageRouteInfo<void> {
+  const PopularTvRoute() : super(PopularTvRoute.name, path: '/popular-tv');
+
+  static const String name = 'PopularTvRoute';
+}
+
+/// generated route for
+/// [TopRatedTvPage]
+class TopRatedTvRoute extends PageRouteInfo<void> {
+  const TopRatedTvRoute() : super(TopRatedTvRoute.name, path: '/top-rated-tv');
+
+  static const String name = 'TopRatedTvRoute';
 }

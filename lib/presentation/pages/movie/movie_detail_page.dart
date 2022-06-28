@@ -8,10 +8,11 @@ import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+  static const ROUTE_NAME = '/detail-movie';
 
   final int id;
 
@@ -216,11 +217,19 @@ class DetailContent extends StatelessWidget {
                                           padding: const EdgeInsets.all(4.0),
                                           child: InkWell(
                                             onTap: () {
-                                              Navigator.pushReplacementNamed(
-                                                context,
-                                                MovieDetailPage.ROUTE_NAME,
-                                                arguments: movie.id,
-                                              );
+                                              Logger()
+                                                  .i("RECOMMENDATION_CLICKED");
+                                              Future.microtask(() {
+                                                Provider.of<MovieDetailNotifier>(
+                                                        context,
+                                                        listen: false)
+                                                    .fetchMovieDetail(movie.id);
+                                                Provider.of<MovieDetailNotifier>(
+                                                        context,
+                                                        listen: false)
+                                                    .loadWatchlistStatus(
+                                                        movie.id);
+                                              });
                                             },
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.all(

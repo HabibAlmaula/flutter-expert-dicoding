@@ -1,7 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/movie/movie.dart';
-import 'package:ditonton/presentation/pages/movie/movie_detail_page.dart';
+import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
@@ -15,11 +16,7 @@ class MovieCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            MovieDetailPage.ROUTE_NAME,
-            arguments: movie.id,
-          );
+          context.pushRoute(MovieDetailRoute(id: movie.id));
         },
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -57,7 +54,9 @@ class MovieCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: movie.posterPath != "null"
+                      ? '$BASE_IMAGE_URL${movie.posterPath}'
+                      : "https://www.unas.ac.id/wp-content/uploads/2021/08/placeholder-17.png",
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),

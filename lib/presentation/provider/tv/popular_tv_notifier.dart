@@ -1,5 +1,5 @@
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/tv/Tv.dart';
+import 'package:ditonton/domain/entities/tv/tv.dart';
 import 'package:ditonton/domain/usecases/tv/get_popular_tv.dart';
 import 'package:flutter/foundation.dart';
 
@@ -29,8 +29,8 @@ class PopularTvNotifier extends ChangeNotifier {
         _state = RequestState.Error;
         notifyListeners();
       },
-      (TvData) {
-        _tv = TvData.cast<Tv>();
+      (tvData) {
+        _tv = tvData.cast<Tv>();
         _state = RequestState.Loaded;
         notifyListeners();
       },

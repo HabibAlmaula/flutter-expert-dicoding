@@ -29,8 +29,8 @@ class TopRatedTvNotifier extends ChangeNotifier {
         _state = RequestState.Error;
         notifyListeners();
       },
-      (TvData) {
-        _tv = TvData;
+      (tvData) {
+        _tv = tvData;
         _state = RequestState.Loaded;
         notifyListeners();
       },

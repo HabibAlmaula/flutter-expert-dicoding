@@ -1,13 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv/tv.dart';
-import 'package:ditonton/presentation/pages/movie/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/movie/popular_movies_page.dart';
-import 'package:ditonton/presentation/pages/movie/search_page.dart';
-import 'package:ditonton/presentation/pages/movie/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/provider/navigation_provider.dart';
 import 'package:ditonton/presentation/provider/tv/tv_list_notifier.dart';
+import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +34,8 @@ class _HomeTvPageState extends State<HomeTvPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              // Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              context.pushRoute(SearchTvRoute());
             },
             icon: Icon(Icons.search),
           )
@@ -54,7 +53,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
           },
           child: SingleChildScrollView(
             controller: NavigationProvider.of(context)
-                .screens[FIRST_SCREEN]
+                .screens[SECOND_SCREEN]
                 .scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,8 +76,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 }),
                 _buildSubHeading(
                   title: 'Popular',
-                  onTap: () => Navigator.pushNamed(
-                      context, PopularMoviesPage.ROUTE_NAME),
+                  onTap: () => context.pushRoute(PopularTvRoute())
                 ),
                 Consumer<TvListNotifier>(builder: (context, data, child) {
                   final state = data.popularTvState;
@@ -94,8 +92,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
                 }),
                 _buildSubHeading(
                   title: 'Top Rated',
-                  onTap: () => Navigator.pushNamed(
-                      context, TopRatedMoviesPage.ROUTE_NAME),
+                  onTap: () => context.pushRoute(TopRatedTvRoute())
                 ),
                 Consumer<TvListNotifier>(builder: (context, data, child) {
                   final state = data.topRatedTvState;
@@ -156,16 +153,12 @@ class TvList extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  MovieDetailPage.ROUTE_NAME,
-                  arguments: tv.id,
-                );
+                context.pushRoute(TvDetailRoute(id: tv.id));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
+                  imageUrl: tv.posterPath != "null" ? '$BASE_IMAGE_URL${tv.posterPath}' : "https://www.unas.ac.id/wp-content/uploads/2021/08/placeholder-17.png",
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),

@@ -4,13 +4,12 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/movie/movie.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/navigation_provider.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeMoviePage extends StatefulWidget {
-  static const ROUTE_NAME = "/home-movie";
+  static const ROUTE_NAME = "/movie";
 
   @override
   _HomeMoviePageState createState() => _HomeMoviePageState();
@@ -53,9 +52,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   ..fetchTopRatedMovies());
           },
           child: SingleChildScrollView(
-            controller: NavigationProvider.of(context)
-                .screens[FIRST_SCREEN]
-                .scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -80,6 +76,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                     onTap: () =>
                         // Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
                         context.pushRoute(PopularMoviesRoute())),
+                        // context.push(PopularMoviesPage.ROUTE_NAME)),
                 Consumer<MovieListNotifier>(builder: (context, data, child) {
                   final state = data.popularMoviesState;
                   if (state == RequestState.Loading) {
@@ -97,6 +94,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                     onTap: () =>
                         // Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
                         context.pushRoute(TopRatedMoviesRoute())),
+                        // context.push(TopRatedMoviesPage.ROUTE_NAME)),
                 Consumer<MovieListNotifier>(builder: (context, data, child) {
                   final state = data.topRatedMoviesState;
                   if (state == RequestState.Loading) {
@@ -156,17 +154,14 @@ class MovieList extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
-                // Navigator.pushNamed(
-                //   context,
-                //   MovieDetailPage.ROUTE_NAME,
-                //   arguments: movie.id,
-                // );
                 context.pushRoute(MovieDetailRoute(id: movie.id));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: (movie.posterPath == "null")
+                      ? "https://www.unas.ac.id/wp-content/uploads/2021/08/placeholder-17.png"
+                      : '$BASE_IMAGE_URL/${movie.posterPath}',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),

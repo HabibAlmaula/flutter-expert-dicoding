@@ -2,6 +2,7 @@ import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/movie/movie.dart';
 import 'package:ditonton/presentation/pages/movie/movie_detail_page.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
+import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -11,17 +12,23 @@ import 'package:provider/provider.dart';
 import '../../dummy_data/dummy_objects.dart';
 import 'movie_detail_page_test.mocks.dart';
 
-@GenerateMocks([MovieDetailNotifier])
+@GenerateMocks([MovieDetailNotifier, WatchlistMovieNotifier])
 void main() {
   late MockMovieDetailNotifier mockNotifier;
+  late MockWatchlistMovieNotifier mockWatchlistMovieNotifier;
 
   setUp(() {
     mockNotifier = MockMovieDetailNotifier();
+    mockWatchlistMovieNotifier = MockWatchlistMovieNotifier();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<MovieDetailNotifier>.value(
-      value: mockNotifier,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MovieDetailNotifier>.value(value: mockNotifier),
+        ChangeNotifierProvider<WatchlistMovieNotifier>.value(
+            value: mockWatchlistMovieNotifier),
+      ],
       child: MaterialApp(
         home: body,
       ),
@@ -102,7 +109,7 @@ void main() {
     await tester.tap(watchlistButton);
     await tester.pump();
 
-    expect(find.byType(AlertDialog), findsOneWidget);
+    expect(find.byType(Dialog), findsOneWidget);
     expect(find.text('Failed'), findsOneWidget);
   });
 }

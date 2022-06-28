@@ -9,6 +9,6 @@ class RemoveWatchlistTv {
   RemoveWatchlistTv(this.repository);
 
   Future<Either<Failure, String>> execute(TvDetail tv) {
-    return repository.removeWatchlist(tv);
+    return repository.removeWatchlistTv(tv);
   }
 }
