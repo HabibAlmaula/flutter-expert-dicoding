@@ -1,16 +1,16 @@
-import 'package:ditonton/presentation/pages/movie/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/pages/tv/watchlist_tv_page.dart';
+import 'package:ditonton/presentation/pages/movie/watch_list/watchlist_movies_page.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/watchlist_tv_page.dart';
 import 'package:flutter/material.dart';
 
-class MainWatchList extends StatefulWidget {
-  const MainWatchList({Key? key}) : super(key: key);
-  static const routeName = "/main-watchlist";
+class MainWatchListPage extends StatefulWidget {
+  const MainWatchListPage({Key? key}) : super(key: key);
+  static const ROUTE_NAME = "main-watchlist";
 
   @override
-  State<MainWatchList> createState() => _MainWatchListState();
+  State<MainWatchListPage> createState() => _MainWatchListPageState();
 }
 
-class _MainWatchListState extends State<MainWatchList>
+class _MainWatchListPageState extends State<MainWatchListPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 

@@ -1,6 +1,6 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/common/app_enum.dart';
 import 'package:ditonton/domain/entities/movie/movie.dart';
-import 'package:ditonton/presentation/pages/movie/home_movie_page.dart';
+import 'package:ditonton/presentation/pages/movie/home/home_movie_page.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/provider/navigation_provider.dart';
 import 'package:flutter/material.dart';

@@ -2,7 +2,7 @@ import 'package:ditonton/domain/entities/tv/last_episode_to_air.dart';
 import 'package:equatable/equatable.dart';
 
 class LastEpisodeToAirModel extends Equatable {
-  LastEpisodeToAirModel({
+  const LastEpisodeToAirModel({
     required this.airDate,
     required this.episodeNumber,
     required this.id,
@@ -15,16 +15,16 @@ class LastEpisodeToAirModel extends Equatable {
     required this.voteCount,
   });
 
-  String airDate;
-  int episodeNumber;
-  int id;
-  String name;
-  String overview;
-  String productionCode;
-  int seasonNumber;
-  String stillPath;
-  double voteAverage;
-  int voteCount;
+  final String airDate;
+  final int episodeNumber;
+  final int id;
+  final String name;
+  final String overview;
+  final String productionCode;
+  final int seasonNumber;
+  final String stillPath;
+  final double voteAverage;
+  final int voteCount;
 
   factory LastEpisodeToAirModel.fromJson(Map<String, dynamic> json) =>
       LastEpisodeToAirModel(

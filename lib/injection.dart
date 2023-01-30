@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
+import 'package:ditonton/data/datasources/networking/api_client.dart';
 import 'package:ditonton/data/datasources/tv_local_datasource.dart';
 import 'package:ditonton/data/datasources/tv_remote_datasource.dart';
 import 'package:ditonton/data/repositories/movie_repository_impl.dart';
@@ -27,7 +29,9 @@ import 'package:ditonton/domain/usecases/tv/get_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/remove_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/save_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/search_tv.dart';
-import 'package:ditonton/presentation/pages/movie/bloc/search/search_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/search/bloc/search_movie_bloc.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
@@ -71,8 +75,24 @@ void init() {
   );
 //register bloc
   locator.registerFactory(
-    () => SearchBloc(locator()),
+    () => SearchMovieBloc(locator()),
   );
+
+  locator.registerFactory(
+    () => HomeMovieBloc(
+      getNowPlayingMovies: locator(),
+      getPopularMovies: locator(),
+      getTopRatedMovies: locator(),
+    ),
+  );
+
+  locator.registerFactory(() => DetailMovieBloc(
+        getMovieDetail: locator(),
+        getMovieRecommendations: locator(),
+        getWatchListStatus: locator(),
+        saveWatchlist: locator(),
+        removeWatchlist: locator(),
+      ));
 
   locator.registerFactory(
     () => PopularMoviesNotifier(
@@ -175,10 +195,10 @@ void init() {
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+      () => MovieRemoteDataSourceImpl(apiClient: locator()));
 
   locator.registerLazySingleton<TvRemoteDataSource>(
-      () => TvRemoteDataSourceImpl(client: locator()));
+      () => TvRemoteDataSourceImpl(apiClient: locator()));
 
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
@@ -191,4 +211,8 @@ void init() {
 
   // external
   locator.registerLazySingleton(() => http.Client());
+
+  //***** EXTERNAL ****
+  final dio = Dio();
+  locator.registerLazySingleton<ApiClient>(() => ApiClient(dio));
 }

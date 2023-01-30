@@ -1,16 +1,20 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ditonton/common/app_enum.dart';
+import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/main_page.dart';
-import 'package:ditonton/presentation/pages/movie/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/movie/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/movie/popular_movies_page.dart';
-import 'package:ditonton/presentation/pages/movie/search_page.dart';
-import 'package:ditonton/presentation/pages/movie/top_rated_movies_page.dart';
+import 'package:ditonton/presentation/pages/main_watch_list.dart';
+import 'package:ditonton/presentation/pages/movie/home/home_movie_page.dart';
+import 'package:ditonton/presentation/pages/movie/detail/movie_detail_page.dart';
+import 'package:ditonton/presentation/pages/movie/list_movie/list_movies_page.dart';
+import 'package:ditonton/presentation/pages/movie/popular/popular_movies_page.dart';
+import 'package:ditonton/presentation/pages/movie/search/search_page.dart';
+import 'package:ditonton/presentation/pages/movie/top_rated/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/splash_page.dart';
-import 'package:ditonton/presentation/pages/tv/home_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/popular_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/search_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/top_rated_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/tv_detail_page.dart';
+import 'package:ditonton/presentation/pages/tv/home/home_tv_page.dart';
+import 'package:ditonton/presentation/pages/tv/popular/popular_tv_page.dart';
+import 'package:ditonton/presentation/pages/tv/search/search_tv_page.dart';
+import 'package:ditonton/presentation/pages/tv/top_rated/top_rated_tv_page.dart';
+import 'package:ditonton/presentation/pages/tv/detail/tv_detail_page.dart';
 import 'package:flutter/material.dart';
 
 part 'app_router.gr.dart';
@@ -26,19 +30,35 @@ part 'app_router.gr.dart';
     ],
   ),
   AutoRoute(
-    usesPathAsKey: true,
-    path: MainPage.routeName,
-    page: MainPage,
-  ),
+      usesPathAsKey: true,
+      path: MainPage.routeName,
+      page: MainPage,
+      children: [
+        AutoRoute(
+          usesPathAsKey: true,
+          path: HomeMoviePage.ROUTE_NAME,
+          page: HomeMoviePage,
+        ),
+        AutoRoute(
+          usesPathAsKey: true,
+          path: HomeTvPage.ROUTE_NAME,
+          page: HomeTvPage,
+        ),
+        AutoRoute(
+          usesPathAsKey: true,
+          path: MainWatchListPage.ROUTE_NAME,
+          page: MainWatchListPage,
+        ),
+        AutoRoute(
+          usesPathAsKey: true,
+          path: AboutPage.ROUTE_NAME,
+          page: AboutPage,
+        ),
+      ]),
   AutoRoute(
     usesPathAsKey: true,
-    path: HomeMoviePage.ROUTE_NAME,
-    page: HomeMoviePage,
-  ),
-  AutoRoute(
-    usesPathAsKey: true,
-    path: HomeTvPage.ROUTE_NAME,
-    page: HomeTvPage,
+    path: ListMoviesPage.ROUTE_NAME,
+    page: ListMoviesPage,
   ),
   AutoRoute(
     usesPathAsKey: true,

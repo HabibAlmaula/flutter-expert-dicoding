@@ -4,7 +4,7 @@ import 'package:ditonton/domain/entities/tv/season.dart';
 import 'package:equatable/equatable.dart';
 
 class TvDetail extends Equatable {
-  TvDetail({
+  const TvDetail({
     required this.adult,
     required this.backdropPath,
     required this.genres,
@@ -28,27 +28,27 @@ class TvDetail extends Equatable {
     required this.voteCount,
   });
 
-  bool adult;
-  String backdropPath;
-  List<Genre> genres;
-  String homepage;
-  int id;
-  bool inProduction;
-  LastEpisodeToAir lastEpisodeToAir;
-  String name;
-  int numberOfEpisodes;
-  int numberOfSeasons;
-  String originalLanguage;
-  String originalName;
-  String overview;
-  double popularity;
-  String posterPath;
-  List<Season> seasons;
-  String status;
-  String tagline;
-  String type;
-  double voteAverage;
-  int voteCount;
+  final bool adult;
+  final String backdropPath;
+  final List<Genre> genres;
+  final String homepage;
+  final int id;
+  final bool inProduction;
+  final LastEpisodeToAir lastEpisodeToAir;
+  final String name;
+  final int numberOfEpisodes;
+  final int numberOfSeasons;
+  final String originalLanguage;
+  final String originalName;
+  final String overview;
+  final double popularity;
+  final String posterPath;
+  final List<Season> seasons;
+  final String status;
+  final String tagline;
+  final String type;
+  final double voteAverage;
+  final int voteCount;
 
   @override
   List<Object?> get props => [

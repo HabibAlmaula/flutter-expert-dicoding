@@ -1,8 +1,8 @@
 import 'package:ditonton/data/models/screen_model.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/main_watch_list.dart';
-import 'package:ditonton/presentation/pages/movie/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/tv/home_tv_page.dart';
+import 'package:ditonton/presentation/pages/movie/home/home_movie_page.dart';
+import 'package:ditonton/presentation/pages/tv/home/home_tv_page.dart';
 import 'package:ditonton/presentation/widgets/exit_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -75,13 +75,13 @@ class NavigationProvider extends ChangeNotifier {
         Icons.favorite,
         color: Colors.purple,
       ),
-      child: MainWatchList(),
-      initialRoute: MainWatchList.routeName,
+      child: MainWatchListPage(),
+      initialRoute: MainWatchListPage.ROUTE_NAME,
       navigatorState: GlobalKey<NavigatorState>(),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           default:
-            return MaterialPageRoute(builder: (_) => MainWatchList());
+            return MaterialPageRoute(builder: (_) => MainWatchListPage());
         }
       },
       scrollController: ScrollController(),

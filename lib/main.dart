@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:ditonton/bloc_observer.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:ditonton/presentation/pages/movie/bloc/search/search_bloc.dart';
+import 'package:ditonton/presentation/bloc/navigation_cubit.dart';
+import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/search/bloc/search_movie_bloc.dart';
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
 import 'package:ditonton/presentation/provider/navigation_provider.dart';
 import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
@@ -23,6 +26,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   di.init();
+  Bloc.observer = HomeObserver();
   runApp(MyApp());
 }
 
@@ -40,7 +44,16 @@ class MyApp extends StatelessWidget {
           create: (_) => di.locator<MovieDetailNotifier>(),
         ),
         BlocProvider(
-          create: (_) => di.locator<SearchBloc>(),
+          create: (_) => NavigationCubit(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchMovieBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<HomeMovieBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<DetailMovieBloc>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),

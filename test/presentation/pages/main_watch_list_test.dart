@@ -1,4 +1,4 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/common/app_enum.dart';
 import 'package:ditonton/presentation/pages/main_watch_list.dart';
 import 'package:ditonton/presentation/provider/tv/watchlist_tv_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
@@ -44,7 +44,7 @@ void main() {
     when(mockNotifier.message).thenReturn("");
     when(mockWatchListTvNotifier.message).thenReturn("");
 
-    await tester.pumpWidget(_makeTestableWidget(MainWatchList()));
+    await tester.pumpWidget(_makeTestableWidget(MainWatchListPage()));
     // await tester.tap(find.byType(Tab).at(0));
     // await tester.pump();
 

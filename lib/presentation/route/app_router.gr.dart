@@ -26,19 +26,14 @@ class _$AppRouter extends RootStackRouter {
     MainRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const MainPage(),
+        child:  MainPage(),
       );
     },
-    HomeMovieRoute.name: (routeData) {
+    ListMoviesRoute.name: (routeData) {
+      final args = routeData.argsAs<ListMoviesRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: HomeMoviePage(),
-      );
-    },
-    HomeTvRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: HomeTvPage(),
+        child: ListMoviesPage(moviesType: args.moviesType),
       );
     },
     SearchRoute.name: (routeData) {
@@ -91,6 +86,30 @@ class _$AppRouter extends RootStackRouter {
         child: TopRatedTvPage(),
       );
     },
+    HomeMovieRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: HomeMoviePage(),
+      );
+    },
+    HomeTvRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: HomeTvPage(),
+      );
+    },
+    MainWatchListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const MainWatchListPage(),
+      );
+    },
+    AboutRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: AboutPage(),
+      );
+    },
   };
 
   @override
@@ -119,15 +138,36 @@ class _$AppRouter extends RootStackRouter {
           MainRoute.name,
           path: '/main-page',
           usesPathAsKey: true,
+          children: [
+            RouteConfig(
+              HomeMovieRoute.name,
+              path: 'movie',
+              parent: MainRoute.name,
+              usesPathAsKey: true,
+            ),
+            RouteConfig(
+              HomeTvRoute.name,
+              path: 'home-tv',
+              parent: MainRoute.name,
+              usesPathAsKey: true,
+            ),
+            RouteConfig(
+              MainWatchListRoute.name,
+              path: 'main-watchlist',
+              parent: MainRoute.name,
+              usesPathAsKey: true,
+            ),
+            RouteConfig(
+              AboutRoute.name,
+              path: 'about',
+              parent: MainRoute.name,
+              usesPathAsKey: true,
+            ),
+          ],
         ),
         RouteConfig(
-          HomeMovieRoute.name,
-          path: '/movie',
-          usesPathAsKey: true,
-        ),
-        RouteConfig(
-          HomeTvRoute.name,
-          path: '/home-tv',
+          ListMoviesRoute.name,
+          path: '/list-movie',
           usesPathAsKey: true,
         ),
         RouteConfig(
@@ -189,37 +229,38 @@ class SplashRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [MainPage]
 class MainRoute extends PageRouteInfo<void> {
-  const MainRoute()
+  const MainRoute({List<PageRouteInfo>? children})
       : super(
           MainRoute.name,
           path: '/main-page',
+          initialChildren: children,
         );
 
   static const String name = 'MainRoute';
 }
 
 /// generated route for
-/// [HomeMoviePage]
-class HomeMovieRoute extends PageRouteInfo<void> {
-  const HomeMovieRoute()
+/// [ListMoviesPage]
+class ListMoviesRoute extends PageRouteInfo<ListMoviesRouteArgs> {
+  ListMoviesRoute({required MoviesType moviesType})
       : super(
-          HomeMovieRoute.name,
-          path: '/movie',
+          ListMoviesRoute.name,
+          path: '/list-movie',
+          args: ListMoviesRouteArgs(moviesType: moviesType),
         );
 
-  static const String name = 'HomeMovieRoute';
+  static const String name = 'ListMoviesRoute';
 }
 
-/// generated route for
-/// [HomeTvPage]
-class HomeTvRoute extends PageRouteInfo<void> {
-  const HomeTvRoute()
-      : super(
-          HomeTvRoute.name,
-          path: '/home-tv',
-        );
+class ListMoviesRouteArgs {
+  const ListMoviesRouteArgs({required this.moviesType});
 
-  static const String name = 'HomeTvRoute';
+  final MoviesType moviesType;
+
+  @override
+  String toString() {
+    return 'ListMoviesRouteArgs{moviesType: $moviesType}';
+  }
 }
 
 /// generated route for
@@ -340,4 +381,52 @@ class TopRatedTvRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TopRatedTvRoute';
+}
+
+/// generated route for
+/// [HomeMoviePage]
+class HomeMovieRoute extends PageRouteInfo<void> {
+  const HomeMovieRoute()
+      : super(
+          HomeMovieRoute.name,
+          path: 'movie',
+        );
+
+  static const String name = 'HomeMovieRoute';
+}
+
+/// generated route for
+/// [HomeTvPage]
+class HomeTvRoute extends PageRouteInfo<void> {
+  const HomeTvRoute()
+      : super(
+          HomeTvRoute.name,
+          path: 'home-tv',
+        );
+
+  static const String name = 'HomeTvRoute';
+}
+
+/// generated route for
+/// [MainWatchListPage]
+class MainWatchListRoute extends PageRouteInfo<void> {
+  const MainWatchListRoute()
+      : super(
+          MainWatchListRoute.name,
+          path: 'main-watchlist',
+        );
+
+  static const String name = 'MainWatchListRoute';
+}
+
+/// generated route for
+/// [AboutPage]
+class AboutRoute extends PageRouteInfo<void> {
+  const AboutRoute()
+      : super(
+          AboutRoute.name,
+          path: 'about',
+        );
+
+  static const String name = 'AboutRoute';
 }

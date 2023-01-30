@@ -1,76 +1,54 @@
-import 'package:ditonton/presentation/provider/navigation_provider.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:ditonton/presentation/bloc/navigation_cubit.dart';
+import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainPage extends StatelessWidget {
   static const routeName = '/main-page';
 
-  const MainPage({Key? key}) : super(key: key);
+   MainPage({Key? key}) : super(key: key);
+  final _innerRouterKey = GlobalKey<AutoTabsRouterPageViewState>();
 
   @override
   Widget build(BuildContext context) {
-    // final PageController _pageController = PageController();
-
-    return Consumer<NavigationProvider>(
-      builder: (context, provider, child) {
-        // Create bottom navigation bar items from screens.
-        final bottomNavigationBarItems = provider.screens
-            .map((screen) => BottomNavigationBarItem(
-                icon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: (provider.screens.indexOf(screen) ==
-                          provider.currentTabIndex)
-                      ? screen.iconActive
-                      : screen.icon,
-                ),
-                label: screen.title,
-                backgroundColor: Colors.transparent,
-                tooltip: ''))
-            .toList();
-
-        // Initialize [Navigator] instance for each screen.
-        final screens = provider.screens
-            .map(
-              (screen) => Navigator(
-                key: screen.navigatorState,
-                onGenerateRoute: screen.onGenerateRoute,
-              ),
-            )
-            .toList();
-
-        return WillPopScope(
-          onWillPop: () async => provider.onWillPop(context),
-          child: Scaffold(
-            body:
-                // PageView(
-                //   controller: _pageController,
-                //   children: screens,
-                //   physics: const NeverScrollableScrollPhysics(),
-                // ),
-                IndexedStack(
-              children: screens,
-              index: provider.currentTabIndex,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              // fixedColor: Colors.black87,
-              elevation: 10,
-              type: BottomNavigationBarType.fixed,
-              items: bottomNavigationBarItems,
-              selectedItemColor: Colors.purple,
-              selectedLabelStyle: TextStyle(
-                  fontSize: 13.0,
-                  fontWeight: FontWeight.bold,
-                  ),
-              // unselectedLabelStyle: poppinsLight.copyWith(fontSize: 12.0),
-              currentIndex: provider.currentTabIndex,
-              onTap: (page) {
-                provider.setTab(page);
-                // _pageController.animateToPage(page,
-                //     duration: const Duration(milliseconds: 300),
-                //     curve: Curves.easeIn);
-              },
-            ),
-          ),
+    return AutoTabsRouter.pageView(
+      key: _innerRouterKey,
+      physics: NeverScrollableScrollPhysics(),
+      routes: const [
+        HomeMovieRoute(),
+        HomeTvRoute(),
+        MainWatchListRoute(),
+        AboutRoute()
+      ],
+      builder: (context, child, _) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return BlocBuilder<NavigationCubit, NavigationState>(
+          builder: (context, state) {
+            return Scaffold(
+                body: child,
+                bottomNavigationBar: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: tabsRouter.activeIndex,
+                  selectedItemColor: Colors.purple,
+                  onTap: (index) {
+                    tabsRouter.setActiveIndex(index);
+                    context.read<NavigationCubit>().onchangeNavbar(index);
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                        label: 'Movie',
+                        icon: Icon(
+                          Icons.movie,
+                        )),
+                    BottomNavigationBarItem(label: 'Tv', icon: Icon(Icons.tv)),
+                    BottomNavigationBarItem(
+                        label: 'Watchlist', icon: Icon(Icons.favorite)),
+                    BottomNavigationBarItem(
+                        label: 'About', icon: Icon(Icons.info)),
+                  ],
+                ));
+          },
         );
       },
     );
