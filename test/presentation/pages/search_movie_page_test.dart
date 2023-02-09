@@ -10,16 +10,10 @@ import 'package:mocktail/mocktail.dart';
 class MockSearchMovieBloc extends MockBloc<SearchMovieEvent, SearchMovieState>
     implements SearchMovieBloc {} // extend MockBloc rather than Mock
 
-// class SearchMovieStateFake extends Fake implements SearchMovieState {}
-//
-// class SearchMovieEventFake extends Fake implements SearchMovieEvent {}
-
 void main() {
   late MockSearchMovieBloc mockSearchMovieBloc;
 
   setUpAll(() {
-    // registerFallbackValue(SearchMovieStateFake());
-    // registerFallbackValue(SearchMovieEventFake());
     mockSearchMovieBloc = MockSearchMovieBloc();
   });
 
@@ -70,7 +64,6 @@ void main() {
   testWidgets('Page should show ListView when search is done, and found Movie',
       (WidgetTester tester) async {
     when(() => mockSearchMovieBloc.state).thenReturn(SearchHasData(<Movie>[]));
-    // when(mockNotifier.searchResult).thenReturn(<Movie>[]);
 
     final listViewFinder = find.byType(ListView);
 

@@ -45,9 +45,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           } else if (state.movieDetailRequestState == RequestState.Loaded &&
               state.movieRecommendationsRequestState == RequestState.Loaded) {
             return SafeArea(
-              child: DetailContent(
-                bloc: _detailMovieBloc,
-              ),
+              child: DetailContent(),
             );
           } else {
             return Text(state.movieDetailRemoteMessage);
@@ -59,18 +57,12 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 }
 
 class DetailContent extends StatelessWidget {
-  final DetailMovieBloc bloc;
-
-  const DetailContent({required this.bloc});
+  // final DetailMovieBloc bloc;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return BlocConsumer<DetailMovieBloc, DetailMovieState>(
-      listener: (context, state) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(state.watchListMessage)));
-      },
+    return BlocBuilder<DetailMovieBloc, DetailMovieState>(
       builder: (context, state) {
         var movie = state.movieDetail;
         var recommendations = state.movieRecommendations;
@@ -116,15 +108,26 @@ class DetailContent extends StatelessWidget {
                                 ElevatedButton(
                                   onPressed: () async {
                                     if (!isAddedWatchlist) {
-                                      bloc.add(OnSaveMovieToWatchList(
-                                          movieData: movie!));
+                                      context.read<DetailMovieBloc>().add(
+                                          OnSaveMovieToWatchList(
+                                              movieData: movie!));
+                                      //toast
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text("Added to Watchlist")));
                                       // Provider.of<WatchlistMovieNotifier>(context,
                                       //         listen: false)
                                       //     .fetchWatchlistMovies();
                                     } else {
-                                      bloc.add(OnRemoveMovieFromWatchList(
-                                          movieData: movie!));
-
+                                      context.read<DetailMovieBloc>().add(
+                                          OnRemoveMovieFromWatchList(
+                                              movieData: movie!));
+                                      //toast
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  "Removed from Watchlist")));
                                       // Provider.of<WatchlistMovieNotifier>(context,
                                       //         listen: false)
                                       //     .fetchWatchlistMovies();
@@ -175,15 +178,19 @@ class DetailContent extends StatelessWidget {
                                 ),
                                 Builder(
                                   builder: (context) {
-                                    if (state.movieRecommendationsRequestState ==
+                                    if (state
+                                            .movieRecommendationsRequestState ==
                                         RequestState.Loading) {
                                       return Center(
                                         child: CircularProgressIndicator(),
                                       );
-                                    } else if (state.movieRecommendationsRequestState ==
+                                    } else if (state
+                                            .movieRecommendationsRequestState ==
                                         RequestState.Error) {
-                                      return Text(state.movieRecommendationRemoteMessage);
-                                    } else if (state.movieRecommendationsRequestState ==
+                                      return Text(state
+                                          .movieRecommendationRemoteMessage);
+                                    } else if (state
+                                            .movieRecommendationsRequestState ==
                                         RequestState.Loaded) {
                                       return Container(
                                         height: 150,

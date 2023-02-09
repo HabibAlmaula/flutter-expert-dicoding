@@ -2,22 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:ditonton/bloc_observer.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:ditonton/presentation/bloc/navigation_cubit.dart';
 import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
 import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
 import 'package:ditonton/presentation/pages/movie/search/bloc/search_movie_bloc.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/navigation_provider.dart';
-import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/popular_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/top_rated_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/tv_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/tv_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/tv_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/watchlist_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/detail/bloc/detail_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/home/bloc/home_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/search/bloc/search_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:ditonton/presentation/route/app_router_observer.dart';
 import 'package:flutter/material.dart';
@@ -37,15 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        BlocProvider(
-          create: (_) => NavigationCubit(),
-        ),
         BlocProvider(
           create: (_) => di.locator<SearchMovieBloc>(),
         ),
@@ -55,41 +38,24 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<DetailMovieBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<HomeTvBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<DetailTvBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<SearchTvBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<WatchListMovieBloc>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => NavigationProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => NavigationProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchListTvNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<WatchListTvBloc>(),
         ),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routeInformationParser: _appRouter.defaultRouteParser(),
         routerDelegate: AutoRouterDelegate(_appRouter,
             navigatorObservers: () => [AppRouterObserver()]),

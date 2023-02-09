@@ -24,9 +24,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     MainRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<MainRouteArgs>(orElse: () => const MainRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child:  MainPage(),
+        child: MainPage(key: args.key),
       );
     },
     ListMoviesRoute.name: (routeData) {
@@ -34,6 +36,16 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: ListMoviesPage(moviesType: args.moviesType),
+      );
+    },
+    ListTvRoute.name: (routeData) {
+      final args = routeData.argsAs<ListTvRouteArgs>();
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: ListTvPage(
+          key: args.key,
+          tvType: args.tvType,
+        ),
       );
     },
     SearchRoute.name: (routeData) {
@@ -48,18 +60,7 @@ class _$AppRouter extends RootStackRouter {
         child: SearchTvPage(),
       );
     },
-    PopularMoviesRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: PopularMoviesPage(),
-      );
-    },
-    TopRatedMoviesRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: TopRatedMoviesPage(),
-      );
-    },
+
     MovieDetailRoute.name: (routeData) {
       final args = routeData.argsAs<MovieDetailRouteArgs>();
       return MaterialPageX<dynamic>(
@@ -74,18 +75,7 @@ class _$AppRouter extends RootStackRouter {
         child: TvDetailPage(id: args.id),
       );
     },
-    PopularTvRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: PopularTvPage(),
-      );
-    },
-    TopRatedTvRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: TopRatedTvPage(),
-      );
-    },
+
     HomeMovieRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -171,6 +161,11 @@ class _$AppRouter extends RootStackRouter {
           usesPathAsKey: true,
         ),
         RouteConfig(
+          ListTvRoute.name,
+          path: '/list-tv',
+          usesPathAsKey: true,
+        ),
+        RouteConfig(
           SearchRoute.name,
           path: '/search',
           usesPathAsKey: true,
@@ -228,21 +223,35 @@ class SplashRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MainPage]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
-      : super(
+class MainRoute extends PageRouteInfo<MainRouteArgs> {
+  MainRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           MainRoute.name,
           path: '/main-page',
+          args: MainRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'MainRoute';
 }
 
+class MainRouteArgs {
+  const MainRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'MainRouteArgs{key: $key}';
+  }
+}
+
 /// generated route for
 /// [ListMoviesPage]
 class ListMoviesRoute extends PageRouteInfo<ListMoviesRouteArgs> {
-  ListMoviesRoute({required MoviesType moviesType})
+  ListMoviesRoute({required FilterType moviesType})
       : super(
           ListMoviesRoute.name,
           path: '/list-movie',
@@ -255,11 +264,45 @@ class ListMoviesRoute extends PageRouteInfo<ListMoviesRouteArgs> {
 class ListMoviesRouteArgs {
   const ListMoviesRouteArgs({required this.moviesType});
 
-  final MoviesType moviesType;
+  final FilterType moviesType;
 
   @override
   String toString() {
     return 'ListMoviesRouteArgs{moviesType: $moviesType}';
+  }
+}
+
+/// generated route for
+/// [ListTvPage]
+class ListTvRoute extends PageRouteInfo<ListTvRouteArgs> {
+  ListTvRoute({
+    Key? key,
+    required FilterType tvType,
+  }) : super(
+          ListTvRoute.name,
+          path: '/list-tv',
+          args: ListTvRouteArgs(
+            key: key,
+            tvType: tvType,
+          ),
+        );
+
+  static const String name = 'ListTvRoute';
+}
+
+class ListTvRouteArgs {
+  const ListTvRouteArgs({
+    this.key,
+    required this.tvType,
+  });
+
+  final Key? key;
+
+  final FilterType tvType;
+
+  @override
+  String toString() {
+    return 'ListTvRouteArgs{key: $key, tvType: $tvType}';
   }
 }
 

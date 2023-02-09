@@ -81,7 +81,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                         onTap: () =>
                             // Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
                             context.pushRoute(ListMoviesRoute(
-                                moviesType: MoviesType.Popular))),
+                                moviesType: FilterType.Popular))),
                     // context.push(PopularMoviesPage.ROUTE_NAME)),
                     Builder(builder: (context) {
                       if (state.popularMovieState == RequestState.Loading) {
@@ -100,7 +100,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                         onTap: () =>
                             // Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
                             context.pushRoute(ListMoviesRoute(
-                                moviesType: MoviesType.TopRated))),
+                                moviesType: FilterType.TopRated))),
                     // context.push(TopRatedMoviesPage.ROUTE_NAME)),
                     Builder(builder: (context) {
                       if (state.topRatedMovieState == RequestState.Loading) {

@@ -1,43 +1,42 @@
 import 'package:ditonton/common/app_enum.dart';
-import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
-import 'package:ditonton/presentation/widgets/movie_card_list.dart';
+import 'package:ditonton/presentation/pages/tv/home/bloc/home_tv_bloc.dart';
+import 'package:ditonton/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ListMoviesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/list-movie';
-  final FilterType moviesType;
+class ListTvPage extends StatefulWidget {
+  static const ROUTE_NAME = '/list-tv';
+  final FilterType tvType;
 
-  const ListMoviesPage({required this.moviesType});
+  const ListTvPage({Key? key, required this.tvType}) : super(key: key);
 
   @override
-  _ListMoviesPageState createState() => _ListMoviesPageState();
+  State<ListTvPage> createState() => _ListTvPageState();
 }
 
-class _ListMoviesPageState extends State<ListMoviesPage> {
+class _ListTvPageState extends State<ListTvPage> {
   late String _title;
-  late HomeMovieBloc _homeMovieBloc;
+  late HomeTvBloc _homeTvBloc;
 
   @override
   void initState() {
-    super.initState();
-    //initialize bloc;
-    _homeMovieBloc = context.read<HomeMovieBloc>();
+    _homeTvBloc = context.read<HomeTvBloc>();
     //initialize title
-    switch (widget.moviesType) {
+    switch (widget.tvType) {
       case FilterType.NowPlaying:
-        _title = "Now Playing Movies";
-        _homeMovieBloc.add(OnLoadNowPlayingMovies());
+        _title = "Now Playing Tv";
+        _homeTvBloc.add(OnLoadNowPlayingTv());
         break;
       case FilterType.Popular:
-        _title = "Popular Movies";
-        _homeMovieBloc.add(OnLoadPopularMovies());
+        _title = "Popular Tv";
+        _homeTvBloc.add(OnLoadPopularTv());
         break;
       case FilterType.TopRated:
-        _title = "Top Rated Movies";
-        _homeMovieBloc.add(OnLoadTopRatedMovies());
+        _title = "Top Rated Tv";
+        _homeTvBloc.add(OnLoadTopRatedTv());
         break;
     }
+    super.initState();
   }
 
   @override
@@ -46,67 +45,65 @@ class _ListMoviesPageState extends State<ListMoviesPage> {
       appBar: AppBar(
         title: Text(_title),
       ),
-      body: BlocBuilder<HomeMovieBloc, HomeMovieState>(
+      body: BlocBuilder<HomeTvBloc, HomeTvState>(
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Builder(
               builder: (context) {
-                switch (widget.moviesType) {
+                switch (widget.tvType) {
                   case FilterType.NowPlaying:
-                    if (state.nowPlayingMovieState == RequestState.Loading) {
+                    if (state.nowPlayingTvState == RequestState.Loading) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else if (state.nowPlayingMovieState ==
-                        RequestState.Loaded) {
+                    } else if (state.nowPlayingTvState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return MovieCard(state.nowPlayingMovies[index]);
+                          return TvCard(state.nowPlayingTv[index]);
                         },
-                        itemCount: state.nowPlayingMovies.length,
+                        itemCount: state.nowPlayingTv.length,
                       );
                     } else {
                       return Center(
                         key: Key('error_message'),
-                        child: Text(state.nowPlayingMovieMessage),
+                        child: Text(state.nowPlayingTvMessage),
                       );
                     }
                   case FilterType.Popular:
-                    if (state.popularMovieState == RequestState.Loading) {
+                    if (state.popularTvState == RequestState.Loading) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else if (state.popularMovieState == RequestState.Loaded) {
+                    } else if (state.popularTvState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return MovieCard(state.popularMovies[index]);
+                          return TvCard(state.popularTv[index]);
                         },
-                        itemCount: state.popularMovies.length,
+                        itemCount: state.popularTv.length,
                       );
                     } else {
                       return Center(
                         key: Key('error_message'),
-                        child: Text(state.popularMovieMessage),
+                        child: Text(state.popularTvMessage),
                       );
                     }
                   case FilterType.TopRated:
-                    if (state.topRatedMovieState == RequestState.Loading) {
+                    if (state.topRatedTvState == RequestState.Loading) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    } else if (state.topRatedMovieState ==
-                        RequestState.Loaded) {
+                    } else if (state.topRatedTvState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return MovieCard(state.topRatedMovies[index]);
+                          return TvCard(state.topRatedTv[index]);
                         },
-                        itemCount: state.topRatedMovies.length,
+                        itemCount: state.topRatedTv.length,
                       );
                     } else {
                       return Center(
                         key: Key('error_message'),
-                        child: Text(state.topRatedMovieMessage),
+                        child: Text(state.topRatedTvMessage),
                       );
                     }
                 }

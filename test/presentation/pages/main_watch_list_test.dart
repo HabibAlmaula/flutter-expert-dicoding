@@ -1,33 +1,35 @@
-import 'package:ditonton/common/app_enum.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:ditonton/presentation/pages/main_watch_list.dart';
-import 'package:ditonton/presentation/provider/tv/watchlist_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:provider/provider.dart';
 
-import 'movie_detail_page_test.mocks.dart';
-import 'tv/tv_detail_page_test.mocks.dart';
+class MockWatchListMovieBloc
+    extends MockBloc<WatchListMovieEvent, WatchListMovieState>
+    implements WatchListMovieBloc {}
 
-@GenerateMocks([WatchlistMovieNotifier, WatchListTvNotifier])
+class MockWatchListTvBloc extends MockBloc<WatchListTvEvent, WatchListTvState>
+    implements WatchListTvBloc {}
+
 void main() {
-  late MockWatchlistMovieNotifier mockNotifier;
-  late MockWatchListTvNotifier mockWatchListTvNotifier;
+  late WatchListMovieBloc _mockWatchListMovieBloc;
+  late WatchListTvBloc _mockWatchListTvBloc;
 
   setUp(() {
-    mockNotifier = MockWatchlistMovieNotifier();
-    mockWatchListTvNotifier = MockWatchListTvNotifier();
+    _mockWatchListMovieBloc = MockWatchListMovieBloc();
+    _mockWatchListTvBloc = MockWatchListTvBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<WatchlistMovieNotifier>.value(
-            value: mockNotifier),
-        ChangeNotifierProvider<WatchListTvNotifier>.value(
-            value: mockWatchListTvNotifier),
+        BlocProvider<WatchListMovieBloc>.value(value: _mockWatchListMovieBloc),
+        BlocProvider<WatchListTvBloc>.value(value: _mockWatchListTvBloc),
       ],
       child: MaterialApp(
         home: body,
@@ -38,15 +40,10 @@ void main() {
   testWidgets(
       'Page should display watchlist movie page when click on first tab',
       (WidgetTester tester) async {
-    when(mockNotifier.watchlistState).thenReturn(RequestState.Empty);
-    when(mockWatchListTvNotifier.watchlistTvState)
-        .thenReturn(RequestState.Empty);
-    when(mockNotifier.message).thenReturn("");
-    when(mockWatchListTvNotifier.message).thenReturn("");
+    when(() => _mockWatchListMovieBloc.state).thenReturn(WatchListMovieState());
+    when(() => _mockWatchListTvBloc.state).thenReturn(WatchListTvState());
 
     await tester.pumpWidget(_makeTestableWidget(MainWatchListPage()));
-    // await tester.tap(find.byType(Tab).at(0));
-    // await tester.pump();
 
     final findTab = find.byType(Tab);
 
