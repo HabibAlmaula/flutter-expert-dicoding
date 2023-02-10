@@ -25,11 +25,5 @@ workflows:
       - name: Flutter test
         script: flutter test
         ignore_failure: false
-      - |
-        #!/usr/bin/env python3
-              
-        print('Multiline python script')
-        - name: Build for iOS
-          script: flutter build ios
     artifacts:
       - build/**/outputs/apk/**/*.apk
