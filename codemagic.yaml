@@ -1,41 +1,43 @@
-# This is a sample Codemagic YAML configuration file.
-# Learn more about Codemagic YAML configuration at https://docs.codemagic.io/ci-cd/configuration/
-
 workflows:
   release-workflow:
-    name: Dicoding Build, test and deploy
+    name: Dicoding Workflow
+    labels:
+      - QA
+      - ${TENANT_NAME}
+    instance_type: mac_mini_m1
+    max_build_duration: 60
     environment:
-      flutter: latest
-
-    platforms: [ ios, android ]
-
-    # Steps that run before building the project
-    pre_build:
-      # Installs Flutter dependencies
-      - command: flutter pub get
-
-    # Steps that build and test the project
-    build:
-      - command: flutter build apk --debug
-      - command: flutter test
-
-    # Steps that run after the project has been built and tested
-    post_build:
-    # Deploy to app stores or other services
-    # - command: flutter deploy <service>
-
-    # Artifacts that should be published to Codemagic artifacts storage
+      groups:
+        - group_name
+        flutter: stable   # Define the channel name or version (e.g. v1.13.4)
+        xcode: latest     # Define latest, edge or version (e.g. 11.2)
+        cocoapods: default  # Define default or version
+        node: default     # Define default, latest, current, lts, carbon (or another stream), nightly or version
+        npm: default     # Define default, latest, next, lts or version
+        ndk: default         # Define default or revision (e.g. r19c)
+        java: default         # Define default, or platform version (e.g. 11)
+        ruby: default      # Define default or version
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: true
+      cancel_previous_builds: false
+    scripts:
+      - echo "single line script"
+      - name: Flutter test
+        script: flutter test
+        ignore_failure: false
+      - |
+        #!/usr/bin/env python3
+              
+        print('Multiline python script')
+        - name: Build for iOS
+          script: flutter build ios
     artifacts:
-      - build/app/outputs/apk/debug/app-debug.apk
-      - build/test_driver/
-
-    analysis:
-      stop_commands:
-        - command: flutter analyze
-
-    test:
-      - name: Flutter Driver tests on ios simulator
-        script:
-          - command: flutter drive --target=test_driver/app.dart --driver=test_driver/app_test.dart --platform=ios
-        environment:
-          xcode: latest
+      - build/**/outputs/apk/**/*.apk
