@@ -1,57 +1,72 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:ditonton/domain/entities/movie/movie.dart';
-import 'package:ditonton/presentation/pages/movie/home_movie_page.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/navigation_provider.dart';
+import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/home/home_movie_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'home_movie_page_test.mocks.dart';
+class MockHomeMovieBloc extends MockBloc<HomeMovieEvent, HomeMovieState>
+    implements HomeMovieBloc {}
 
-@GenerateMocks([MovieListNotifier, NavigationProvider])
 void main() {
-  late MockMovieListNotifier mockNotifier;
-  late MockNavigationProvider mockNavigationProvider;
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  late HomeMovieBloc mockHomeMovieBloc;
 
   setUp(() {
-    mockNotifier = MockMovieListNotifier();
-    mockNavigationProvider = MockNavigationProvider();
+    mockHomeMovieBloc = MockHomeMovieBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<MovieListNotifier>.value(value: mockNotifier),
-        ChangeNotifierProvider<NavigationProvider>.value(
-            value: mockNavigationProvider),
-      ],
+    return BlocProvider<HomeMovieBloc>.value(
+      value: mockHomeMovieBloc,
       child: MaterialApp(
         home: body,
       ),
     );
   }
 
-  testWidgets('Page should text header when loading', (WidgetTester tester) async {
-    when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loading);
-    when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loading);
-    when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loading);
+  testWidgets('Page should text header when loading',
+      (WidgetTester tester) async {
+    whenListen<HomeMovieState>(
+      mockHomeMovieBloc,
+      Stream<HomeMovieState>.fromIterable([
+        HomeMovieState().nowPlayingLoading(),
+        HomeMovieState().popularLoading(),
+        HomeMovieState().topRatedLoading(),
+      ]),
+    );
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().nowPlayingLoading());
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().popularLoading());
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().topRatedLoading());
 
     final textHeaderFinder = find.byType(Text);
     await tester.pumpWidget(_makeTestableWidget(HomeMoviePage()));
     expect(textHeaderFinder, findsWidgets);
   });
 
-  testWidgets('Page should text header when loaded', (WidgetTester tester) async {
-    when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loaded);
-    when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loaded);
-    when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loaded);
-
-    when(mockNotifier.nowPlayingMovies).thenReturn(<Movie>[]);
-    when(mockNotifier.popularMovies).thenReturn(<Movie>[]);
-    when(mockNotifier.topRatedMovies).thenReturn(<Movie>[]);
+  testWidgets('Page should text header when loaded',
+      (WidgetTester tester) async {
+    whenListen<HomeMovieState>(
+      mockHomeMovieBloc,
+      Stream<HomeMovieState>.fromIterable([
+        HomeMovieState().nowPlayingHasData(result: <Movie>[]),
+        HomeMovieState().popularHasData(result: <Movie>[]),
+        HomeMovieState().topRatedHasData(result: <Movie>[]),
+      ]),
+    );
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().nowPlayingHasData(result: <Movie>[]));
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().popularHasData(result: <Movie>[]));
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().topRatedHasData(result: <Movie>[]));
 
     final textHeaderFinder = find.byType(Text);
     await tester.pumpWidget(_makeTestableWidget(HomeMoviePage()));
@@ -60,23 +75,42 @@ void main() {
 
   testWidgets('Page should display progress bar when loading',
       (WidgetTester tester) async {
-    when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loading);
-    when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loading);
-    when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loading);
+    whenListen<HomeMovieState>(
+      mockHomeMovieBloc,
+      Stream<HomeMovieState>.fromIterable([
+        HomeMovieState().nowPlayingLoading(),
+        HomeMovieState().popularLoading(),
+        HomeMovieState().topRatedLoading(),
+      ]),
+    );
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().nowPlayingLoading());
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().popularLoading());
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().topRatedLoading());
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
     await tester.pumpWidget(_makeTestableWidget(HomeMoviePage()));
     expect(progressBarFinder, findsWidgets);
   });
+
   testWidgets('Page should display ListView when data is loaded',
       (WidgetTester tester) async {
-    when(mockNotifier.nowPlayingState).thenReturn(RequestState.Loaded);
-    when(mockNotifier.popularMoviesState).thenReturn(RequestState.Loaded);
-    when(mockNotifier.topRatedMoviesState).thenReturn(RequestState.Loaded);
-
-    when(mockNotifier.nowPlayingMovies).thenReturn(<Movie>[]);
-    when(mockNotifier.popularMovies).thenReturn(<Movie>[]);
-    when(mockNotifier.topRatedMovies).thenReturn(<Movie>[]);
+    whenListen<HomeMovieState>(
+      mockHomeMovieBloc,
+      Stream<HomeMovieState>.fromIterable([
+        HomeMovieState().nowPlayingHasData(result: <Movie>[]),
+        HomeMovieState().popularHasData(result: <Movie>[]),
+        HomeMovieState().topRatedHasData(result: <Movie>[]),
+      ]),
+    );
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().nowPlayingHasData(result: <Movie>[]));
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().popularHasData(result: <Movie>[]));
+    when(() => mockHomeMovieBloc.state)
+        .thenReturn(HomeMovieState().topRatedHasData(result: <Movie>[]));
 
     final listViewFinder = find.byType(ListView);
 

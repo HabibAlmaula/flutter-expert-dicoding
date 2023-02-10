@@ -1,6 +1,11 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
+import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
+import 'package:ditonton/data/datasources/networking/api_client.dart';
 import 'package:ditonton/data/datasources/tv_local_datasource.dart';
 import 'package:ditonton/data/datasources/tv_remote_datasource.dart';
 import 'package:ditonton/data/repositories/movie_repository_impl.dart';
@@ -27,102 +32,74 @@ import 'package:ditonton/domain/usecases/tv/get_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/remove_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/save_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/search_tv.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_search_notifier.dart';
-import 'package:ditonton/presentation/provider/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/top_rated_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/popular_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/top_rated_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/tv_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/tv_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/tv_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv/watchlist_tv_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
+import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/search/bloc/search_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/home/bloc/home_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/search/bloc/search_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+
+import 'presentation/pages/tv/detail/bloc/detail_tv_bloc.dart';
 
 final locator = GetIt.instance;
 
 void init() {
-  // provider
+  // bloc
   /*MOVIES*/
   locator.registerFactory(
-    () => MovieListNotifier(
+    () => SearchMovieBloc(locator()),
+  );
+
+  locator.registerFactory(
+    () => HomeMovieBloc(
       getNowPlayingMovies: locator(),
       getPopularMovies: locator(),
       getTopRatedMovies: locator(),
     ),
   );
+
+  locator.registerFactory(() => DetailMovieBloc(
+        getMovieDetail: locator(),
+        getMovieRecommendations: locator(),
+        getWatchListStatus: locator(),
+        saveWatchlist: locator(),
+        removeWatchlist: locator(),
+      ));
+
   locator.registerFactory(
-    () => MovieDetailNotifier(
-      getMovieDetail: locator(),
-      getMovieRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieSearchNotifier(
-      searchMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => PopularMoviesNotifier(
-      locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedMoviesNotifier(
-      getTopRatedMovies: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => WatchlistMovieNotifier(
+    () => WatchListMovieBloc(
       getWatchlistMovies: locator(),
     ),
   );
+
   /*TV*/
   locator.registerFactory(
-    () => TvListNotifier(
+    () => HomeTvBloc(
       getNowPlayingTv: locator(),
-      getTopRatedTv: locator(),
       getPopularTv: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => PopularTvNotifier(
-      getPopularTv: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TopRatedTvNotifier(
       getTopRatedTv: locator(),
     ),
   );
 
-  locator.registerFactory(
-    () => TvDetailNotifier(
-      getTvDetail: locator(),
-      getTvRecommendations: locator(),
-      getWatchListStatusTv: locator(),
-      saveWatchlistTv: locator(),
-      removeWatchlistTv: locator(),
-    ),
-  );
+  locator.registerFactory(() => DetailTvBloc(
+        getTvDetail: locator(),
+        getTvRecommendations: locator(),
+        getWatchListStatusTv: locator(),
+        saveWatchlistTv: locator(),
+        removeWatchlistTv: locator(),
+      ));
 
   locator.registerFactory(
-    () => TvSearchNotifier(
-      searchTv: locator(),
-    ),
-  );
-
-  locator.registerFactory(
-    () => WatchListTvNotifier(
+    () => WatchListTvBloc(
       getWatchlistTv: locator(),
     ),
+  );
+
+  locator.registerFactory(
+    () => SearchTvBloc(searchTv: locator()),
   );
 
   // use case
@@ -169,10 +146,10 @@ void init() {
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+      () => MovieRemoteDataSourceImpl(apiClient: locator()));
 
   locator.registerLazySingleton<TvRemoteDataSource>(
-      () => TvRemoteDataSourceImpl(client: locator()));
+      () => TvRemoteDataSourceImpl(apiClient: locator()));
 
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
@@ -185,4 +162,13 @@ void init() {
 
   // external
   locator.registerLazySingleton(() => http.Client());
+
+  //***** EXTERNAL ****
+  //dio
+  locator.registerLazySingleton(() => Dio());
+  //cert
+  locator.registerSingletonAsync<ByteData>(
+      () async => await AppConstant().loadCert());
+  locator.registerLazySingleton<ApiClient>(
+      () => ApiClient(dio: locator(), cert: locator()));
 }

@@ -1,26 +1,25 @@
-import 'package:ditonton/common/state_enum.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:ditonton/domain/entities/tv/tv.dart';
-import 'package:ditonton/presentation/pages/tv/search_tv_page.dart';
-import 'package:ditonton/presentation/provider/tv/tv_search_notifier.dart';
+import 'package:ditonton/presentation/pages/tv/search/bloc/search_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/search/search_tv_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'search_tv_page_test.mocks.dart';
+class MockSearchTvBloc extends MockBloc<SearchTvEvent, SearchTvState>
+    implements SearchTvBloc {} // extend MockBloc rather than Mock
 
-@GenerateMocks([TvSearchNotifier])
 void main() {
-  late MockTvSearchNotifier mockNotifier;
+  late MockSearchTvBloc _mockSearchTvBloc;
 
-  setUp(() {
-    mockNotifier = MockTvSearchNotifier();
+  setUpAll(() {
+    _mockSearchTvBloc = MockSearchTvBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<TvSearchNotifier>.value(
-      value: mockNotifier,
+    return BlocProvider<SearchTvBloc>.value(
+      value: _mockSearchTvBloc,
       child: MaterialApp(
         home: body,
       ),
@@ -28,38 +27,43 @@ void main() {
   }
 
   testWidgets('Page should display Textfield with empty field',
-      (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Empty);
+          (WidgetTester tester) async {
+        whenListen<SearchTvState>(
+          _mockSearchTvBloc,
+          Stream<SearchTvState>.fromIterable([
+            SearchEmpty(),
+          ]),
+        );
+        when(() => _mockSearchTvBloc.state).thenReturn(SearchEmpty());
 
-    final textFieldFind = find.byType(TextField);
+        final textFieldFind = find.byType(TextField);
 
-    await tester.pumpWidget(_makeTestableWidget(SearchTvPage()));
+        await tester.pumpWidget(_makeTestableWidget(SearchTvPage()));
 
-    expect(textFieldFind, findsOneWidget);
-  });
+        expect(textFieldFind, findsOneWidget);
+      });
 
   testWidgets('Page should show progress indicator when search is begin',
-      (WidgetTester tester) async {
-    when(mockNotifier.state).thenReturn(RequestState.Loading);
-
-    await tester.pumpWidget(_makeTestableWidget(SearchTvPage()));
-    await tester.enterText(find.byType(TextField), 'spiderman');
-    await tester.testTextInput.receiveAction(TextInputAction.done);
-    await tester.pump();
-
-    final progressBarFinder = find.byType(CircularProgressIndicator);
-    final centerFinder = find.byType(Center);
-
-    when(mockNotifier.state).thenReturn(RequestState.Loading);
-
-    expect(centerFinder, findsWidgets);
-    expect(progressBarFinder, findsWidgets);
-  });
-
-  testWidgets('Page should show ListView when search is done, and found tv',
           (WidgetTester tester) async {
-        when(mockNotifier.state).thenReturn(RequestState.Loaded);
-        when(mockNotifier.searchResult).thenReturn(<Tv>[]);
+        when(() => _mockSearchTvBloc.state).thenReturn(SearchLoading());
+
+        await tester.pumpWidget(_makeTestableWidget(SearchTvPage()));
+        await tester.enterText(find.byType(TextField), 'spiderman');
+        await tester.testTextInput.receiveAction(TextInputAction.done);
+        await tester.pump();
+
+        final progressBarFinder = find.byType(CircularProgressIndicator);
+        final centerFinder = find.byType(Center);
+
+        when(() => _mockSearchTvBloc.state).thenReturn(SearchLoading());
+
+        expect(centerFinder, findsWidgets);
+        expect(progressBarFinder, findsWidgets);
+      });
+
+  testWidgets('Page should show ListView when search is done, and found Movie',
+          (WidgetTester tester) async {
+        when(() => _mockSearchTvBloc.state).thenReturn(SearchHasData(<Tv>[]));
 
         final listViewFinder = find.byType(ListView);
 

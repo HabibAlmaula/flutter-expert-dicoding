@@ -1,25 +1,24 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/pages/tv/watchlist_tv_page.dart';
-import 'package:ditonton/presentation/provider/tv/watchlist_tv_notifier.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/watchlist_tv_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
-import 'package:provider/provider.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'watch_list_tv_page_test.mocks.dart';
+class MockWatchListTvBloc extends MockBloc<WatchListTvEvent, WatchListTvState>
+    implements WatchListTvBloc {}
 
-@GenerateMocks([WatchListTvNotifier])
 void main() {
-  late MockWatchListTvNotifier mockNotifier;
+  late WatchListTvBloc _mockWatchListTvBloc;
 
   setUp(() {
-    mockNotifier = MockWatchListTvNotifier();
+    _mockWatchListTvBloc = MockWatchListTvBloc();
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return ChangeNotifierProvider<WatchListTvNotifier>.value(
-      value: mockNotifier,
+    return BlocProvider<WatchListTvBloc>.value(
+      value: _mockWatchListTvBloc,
       child: MaterialApp(
         home: body,
       ),
@@ -27,28 +26,43 @@ void main() {
   }
 
   testWidgets('Page should display center progress bar when loading',
-          (WidgetTester tester) async {
-        when(mockNotifier.watchlistTvState).thenReturn(RequestState.Loading);
+      (WidgetTester tester) async {
+    whenListen<WatchListTvState>(
+      _mockWatchListTvBloc,
+      Stream<WatchListTvState>.fromIterable([
+        WatchListTvState().watchListLoading(),
+      ]),
+      initialState: WatchListTvState(),
+    );
 
-        final progressBarFinder = find.byType(CircularProgressIndicator);
-        final centerFinder = find.byType(Center);
+    when(() => _mockWatchListTvBloc.state)
+        .thenReturn(WatchListTvState().watchListLoading());
 
-        await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
+    final progressBarFinder = find.byType(CircularProgressIndicator);
+    final centerFinder = find.byType(Center);
 
-        expect(centerFinder, findsOneWidget);
-        expect(progressBarFinder, findsOneWidget);
-      });
+    await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
 
+    expect(centerFinder, findsOneWidget);
+    expect(progressBarFinder, findsOneWidget);
+  });
 
   testWidgets('Page should display text with message when Error',
-          (WidgetTester tester) async {
-        when(mockNotifier.watchlistTvState).thenReturn(RequestState.Error);
-        when(mockNotifier.message).thenReturn('Error message');
+      (WidgetTester tester) async {
+    whenListen<WatchListTvState>(
+      _mockWatchListTvBloc,
+      Stream<WatchListTvState>.fromIterable(
+          [WatchListTvState().watchListError(errMessage: 'Error Message')]),
+      initialState: WatchListTvState(),
+    );
 
-        final textFinder = find.byKey(Key('error_message'));
+    when(() => _mockWatchListTvBloc.state).thenReturn(
+        WatchListTvState().watchListError(errMessage: 'Error Message'));
 
-        await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
+    final textFinder = find.byKey(Key('error_message'));
 
-        expect(textFinder, findsOneWidget);
-      });
+    await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
+
+    expect(textFinder, findsOneWidget);
+  });
 }

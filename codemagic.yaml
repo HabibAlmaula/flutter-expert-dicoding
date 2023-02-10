@@ -1,0 +1,29 @@
+workflows:
+  release-workflow:
+    name: Dicoding Workflow
+    labels:
+      - Debug
+    instance_type: mac_mini_m1
+    max_build_duration: 60
+    environment:
+      flutter: stable   # Define the channel name or version (e.g. v1.13.4)
+      xcode: latest     # Define latest, edge or version (e.g. 11.2)
+      cocoapods: default  # Define default or version
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+          include: true
+          source: true
+      cancel_previous_builds: false
+    scripts:
+      - echo "single line script"
+      - name: Flutter test
+        script: flutter test
+        ignore_failure: false
+    artifacts:
+      - build/**/outputs/apk/**/*.apk
