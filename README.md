@@ -40,6 +40,6 @@ Jika kamu menerapkan modular pada project, Anda dapat memanfaatkan berkas `test.
 4. Tunggu proses testing selesai hingga muncul web terkait laporan coverage.
 
 
-[![Codemagic build status](https://api.codemagic.io/apps/63e5b10824de68b382e58980/<workflow-id>/status_badge.svg)](https://codemagic.io/apps/63e5b10824de68b382e58980/<workflow-id>/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/63e5b10824de68b382e58980/release-workflow/status_badge.svg)](https://codemagic.io/apps/63e5b10824de68b382e58980/release-workflow/latest_build)
 
 
