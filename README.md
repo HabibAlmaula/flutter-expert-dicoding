@@ -1,14 +1,3 @@
-#flutter-expert-project
-
-Repository ini merupakan starter project submission kelas Flutter Expert Dicoding Indonesia.
-
----
-
-## Tips Submission Awal
-
-Pastikan untuk memeriksa kembali seluruh hasil testing pada submissionmu sebelum dikirimkan. Karena kriteria pada submission ini akan diperiksa setelah seluruh berkas testing berhasil dijalankan.
-
-
 ## Tips Submission Akhir
 
 Jika kamu menerapkan modular pada project, Anda dapat memanfaatkan berkas `test.sh` pada repository ini. Berkas tersebut dapat mempermudah proses testing melalui *terminal* atau *command prompt*. Sebelumnya menjalankan berkas tersebut, ikuti beberapa langkah berikut:
@@ -49,4 +38,8 @@ Jika kamu menerapkan modular pada project, Anda dapat memanfaatkan berkas `test.
     ```
     Proses ini akan men-*generate* berkas `lcov.info` dan folder `coverage` terkait dengan laporan coverage.
 4. Tunggu proses testing selesai hingga muncul web terkait laporan coverage.
+
+
+[![Codemagic build status](https://api.codemagic.io/apps/63e5b10824de68b382e58980/<workflow-id>/status_badge.svg)](https://codemagic.io/apps/63e5b10824de68b382e58980/<workflow-id>/latest_build)
+
 
