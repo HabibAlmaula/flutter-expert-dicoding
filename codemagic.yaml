@@ -4,7 +4,6 @@
 workflows:
   release-workflow:
     name: Dicoding Build, test and deploy
-    trigger_mode: push
     environment:
       flutter: latest
 
