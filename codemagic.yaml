@@ -9,11 +9,6 @@ workflows:
       flutter: stable   # Define the channel name or version (e.g. v1.13.4)
       xcode: latest     # Define latest, edge or version (e.g. 11.2)
       cocoapods: default  # Define default or version
-      node: default     # Define default, latest, current, lts, carbon (or another stream), nightly or version
-      npm: default     # Define default, latest, next, lts or version
-      ndk: default         # Define default or revision (e.g. r19c)
-      java: default         # Define default, or platform version (e.g. 11)
-      ruby: default      # Define default or version
     cache:
       cache_paths:
         - ~/.pub-cache
