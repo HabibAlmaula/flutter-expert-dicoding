@@ -83,7 +83,7 @@ class DetailContent extends StatelessWidget {
                 builder: (context, scrollController) {
                   return Container(
                     decoration: BoxDecoration(
-                      color: kRichBlack,
+                      color: AppConstant.kRichBlack,
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(16)),
                     ),
@@ -103,7 +103,7 @@ class DetailContent extends StatelessWidget {
                               children: [
                                 Text(
                                   "${movie?.title}",
-                                  style: kHeading5,
+                                  style: AppConstant.kHeading5,
                                 ),
                                 ElevatedButton(
                                   onPressed: () async {
@@ -156,7 +156,7 @@ class DetailContent extends StatelessWidget {
                                       itemCount: 5,
                                       itemBuilder: (context, index) => Icon(
                                         Icons.star,
-                                        color: kMikadoYellow,
+                                        color: AppConstant.kMikadoYellow,
                                       ),
                                       itemSize: 24,
                                     ),
@@ -166,7 +166,7 @@ class DetailContent extends StatelessWidget {
                                 SizedBox(height: 16),
                                 Text(
                                   'Overview',
-                                  style: kHeading6,
+                                  style: AppConstant.kHeading6,
                                 ),
                                 Text(
                                   "${movie?.overview}",
@@ -174,7 +174,7 @@ class DetailContent extends StatelessWidget {
                                 SizedBox(height: 16),
                                 Text(
                                   'Recommendations',
-                                  style: kHeading6,
+                                  style: AppConstant.kHeading6,
                                 ),
                                 Builder(
                                   builder: (context) {
@@ -273,7 +273,7 @@ class DetailContent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundColor: kRichBlack,
+                backgroundColor: AppConstant.kRichBlack,
                 foregroundColor: Colors.white,
                 child: IconButton(
                   icon: Icon(Icons.arrow_back),

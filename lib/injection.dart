@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
+import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/movie_local_data_source.dart';
 import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
@@ -161,6 +164,11 @@ void init() {
   locator.registerLazySingleton(() => http.Client());
 
   //***** EXTERNAL ****
-  final dio = Dio();
-  locator.registerLazySingleton<ApiClient>(() => ApiClient(dio));
+  //dio
+  locator.registerLazySingleton(() => Dio());
+  //cert
+  locator.registerSingletonAsync<ByteData>(
+      () async => await AppConstant().loadCert());
+  locator.registerLazySingleton<ApiClient>(
+      () => ApiClient(dio: locator(), cert: locator()));
 }

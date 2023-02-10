@@ -32,7 +32,7 @@ class SearchPage extends StatelessWidget {
             SizedBox(height: 16),
             Text(
               'Search Result',
-              style: kHeading6,
+              style: AppConstant.kHeading6,
             ),
             BlocBuilder<SearchMovieBloc, SearchMovieState>(
               builder: (context, state) {

@@ -16,8 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
   di.init();
+  await di.locator.allReady();
   Bloc.observer = HomeObserver();
   runApp(MyApp());
 }
@@ -65,10 +67,10 @@ class MyApp extends StatelessWidget {
             TargetPlatform.android: ZoomPageTransitionsBuilder(),
             TargetPlatform.iOS: ZoomPageTransitionsBuilder()
           }),
-          colorScheme: kColorScheme,
-          primaryColor: kRichBlack,
-          scaffoldBackgroundColor: kRichBlack,
-          textTheme: kTextTheme,
+          colorScheme: AppConstant.kColorScheme,
+          primaryColor: AppConstant.kRichBlack,
+          scaffoldBackgroundColor: AppConstant.kRichBlack,
+          textTheme: AppConstant.kTextTheme,
         ),
         builder: (context, router) {
           return router!;

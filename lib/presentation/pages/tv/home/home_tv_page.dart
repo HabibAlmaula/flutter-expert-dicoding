@@ -62,7 +62,7 @@ class _HomeTvPageState extends State<HomeTvPage> {
                   children: [
                     Text(
                       'Now Playing',
-                      style: kHeading6,
+                      style: AppConstant.kHeading6,
                     ),
                     Builder(builder: (context) {
                       if (state.nowPlayingTvState == RequestState.Loading) {

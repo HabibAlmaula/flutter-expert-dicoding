@@ -60,7 +60,6 @@ class _$AppRouter extends RootStackRouter {
         child: SearchTvPage(),
       );
     },
-
     MovieDetailRoute.name: (routeData) {
       final args = routeData.argsAs<MovieDetailRouteArgs>();
       return MaterialPageX<dynamic>(
@@ -75,7 +74,6 @@ class _$AppRouter extends RootStackRouter {
         child: TvDetailPage(id: args.id),
       );
     },
-
     HomeMovieRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -176,16 +174,6 @@ class _$AppRouter extends RootStackRouter {
           usesPathAsKey: true,
         ),
         RouteConfig(
-          PopularMoviesRoute.name,
-          path: '/popular-movie',
-          usesPathAsKey: true,
-        ),
-        RouteConfig(
-          TopRatedMoviesRoute.name,
-          path: '/top-rated-movie',
-          usesPathAsKey: true,
-        ),
-        RouteConfig(
           MovieDetailRoute.name,
           path: '/detail-movie',
           usesPathAsKey: true,
@@ -193,16 +181,6 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           TvDetailRoute.name,
           path: '/detail-tv/:id',
-          usesPathAsKey: true,
-        ),
-        RouteConfig(
-          PopularTvRoute.name,
-          path: '/popular-tv',
-          usesPathAsKey: true,
-        ),
-        RouteConfig(
-          TopRatedTvRoute.name,
-          path: '/top-rated-tv',
           usesPathAsKey: true,
         ),
       ];
@@ -331,30 +309,6 @@ class SearchTvRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PopularMoviesPage]
-class PopularMoviesRoute extends PageRouteInfo<void> {
-  const PopularMoviesRoute()
-      : super(
-          PopularMoviesRoute.name,
-          path: '/popular-movie',
-        );
-
-  static const String name = 'PopularMoviesRoute';
-}
-
-/// generated route for
-/// [TopRatedMoviesPage]
-class TopRatedMoviesRoute extends PageRouteInfo<void> {
-  const TopRatedMoviesRoute()
-      : super(
-          TopRatedMoviesRoute.name,
-          path: '/top-rated-movie',
-        );
-
-  static const String name = 'TopRatedMoviesRoute';
-}
-
-/// generated route for
 /// [MovieDetailPage]
 class MovieDetailRoute extends PageRouteInfo<MovieDetailRouteArgs> {
   MovieDetailRoute({required int id})
@@ -400,30 +354,6 @@ class TvDetailRouteArgs {
   String toString() {
     return 'TvDetailRouteArgs{id: $id}';
   }
-}
-
-/// generated route for
-/// [PopularTvPage]
-class PopularTvRoute extends PageRouteInfo<void> {
-  const PopularTvRoute()
-      : super(
-          PopularTvRoute.name,
-          path: '/popular-tv',
-        );
-
-  static const String name = 'PopularTvRoute';
-}
-
-/// generated route for
-/// [TopRatedTvPage]
-class TopRatedTvRoute extends PageRouteInfo<void> {
-  const TopRatedTvRoute()
-      : super(
-          TopRatedTvRoute.name,
-          path: '/top-rated-tv',
-        );
-
-  static const String name = 'TopRatedTvRoute';
 }
 
 /// generated route for

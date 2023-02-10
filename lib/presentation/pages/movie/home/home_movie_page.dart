@@ -62,7 +62,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   children: [
                     Text(
                       'Now Playing',
-                      style: kHeading6,
+                      style: AppConstant.kHeading6,
                     ),
                     Builder(builder: (context) {
                       if (state.nowPlayingMovieState == RequestState.Loading) {

@@ -15,7 +15,7 @@ class SubHeadingHome extends StatelessWidget {
       children: [
         Text(
           title,
-          style: kHeading6,
+          style: AppConstant.kHeading6,
         ),
         InkWell(
           onTap: onTap,

@@ -30,7 +30,7 @@ class SearchTvPage extends StatelessWidget {
             SizedBox(height: 16),
             Text(
               'Search Result',
-              style: kHeading6,
+              style: AppConstant.kHeading6,
             ),
             BlocBuilder<SearchTvBloc, SearchTvState>(
               builder: (context, state) {
