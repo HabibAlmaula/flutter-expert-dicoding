@@ -1,3 +1,42 @@
+# This is a sample Codemagic YAML configuration file.
+# Learn more about Codemagic YAML configuration at https://docs.codemagic.io/ci-cd/configuration/
+
 workflows:
   release-workflow:
-    name: Dicoding
+    name: Dicoding Build, test and deploy
+    trigger_mode: push
+    environment:
+      flutter: latest
+
+    platforms: [ ios, android ]
+
+    # Steps that run before building the project
+    pre_build:
+      # Installs Flutter dependencies
+      - command: flutter pub get
+
+    # Steps that build and test the project
+    build:
+      - command: flutter build apk --debug
+      - command: flutter test
+
+    # Steps that run after the project has been built and tested
+    post_build:
+    # Deploy to app stores or other services
+    # - command: flutter deploy <service>
+
+    # Artifacts that should be published to Codemagic artifacts storage
+    artifacts:
+      - build/app/outputs/apk/debug/app-debug.apk
+      - build/test_driver/
+
+    analysis:
+      stop_commands:
+        - command: flutter analyze
+
+    test:
+      - name: Flutter Driver tests on ios simulator
+        script:
+          - command: flutter drive --target=test_driver/app.dart --driver=test_driver/app_test.dart --platform=ios
+        environment:
+          xcode: latest
