@@ -28,10 +28,10 @@ class AppConstant {
 
 // text theme
   static final kTextTheme = TextTheme(
-    headline5: AppConstant.kHeading5,
-    headline6: AppConstant.kHeading6,
-    subtitle1: AppConstant.kSubtitle,
-    bodyText2: AppConstant.kBodyText,
+    headlineSmall: AppConstant.kHeading5,
+    titleLarge: AppConstant.kHeading6,
+    titleMedium: AppConstant.kSubtitle,
+    bodyMedium: AppConstant.kBodyText,
   );
 
   static const kColorScheme = ColorScheme(
