@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ditonton/bloc_observer.dart';
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/injection.dart' as di;
 import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
 import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
@@ -12,14 +13,18 @@ import 'package:ditonton/presentation/pages/tv/search/bloc/search_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:ditonton/presentation/route/app_router_observer.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   di.init();
-  await di.locator.allReady();
   Bloc.observer = HomeObserver();
   runApp(MyApp());
 }
@@ -29,6 +34,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Test Crash
+    // FirebaseCrashlytics.instance.crash();
     return MultiProvider(
       providers: [
         BlocProvider(
