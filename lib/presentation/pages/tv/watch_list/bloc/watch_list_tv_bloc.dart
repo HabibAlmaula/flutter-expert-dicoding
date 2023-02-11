@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:ditonton/common/app_enum.dart';
 import 'package:ditonton/domain/entities/tv/tv.dart';

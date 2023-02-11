@@ -1,7 +1,7 @@
 part of 'home_tv_bloc.dart';
 
 @immutable
-abstract class HomeTvEvent {}
+abstract class HomeTvEvent extends Equatable {}
 
 
 class OnLoadNowPlayingTv extends HomeTvEvent {
