@@ -12,7 +12,6 @@ class MockDetailMovieBloc extends MockBloc<DetailMovieEvent, DetailMovieState>
     implements DetailMovieBloc {}
 
 void main() {
-
   late DetailMovieBloc mockDetailMovieBloc;
 
   setUp(() async {
@@ -52,6 +51,28 @@ void main() {
 
     expect(centerFinder, findsOneWidget);
     expect(progressBarFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display text when error',
+      (WidgetTester tester) async {
+    whenListen(
+      mockDetailMovieBloc,
+      Stream<DetailMovieState>.fromIterable([
+        const DetailMovieState().detailMovieLoading(),
+        const DetailMovieState().detailMovieError(message: "error")
+      ]),
+    );
+    when(() => mockDetailMovieBloc.state).thenReturn(
+        const DetailMovieState().detailMovieError(message: "error"));
+
+    final contentFinder = find.byType(Text);
+
+    await tester.pumpWidget(makeTestableWidget(MovieDetailPage(
+      id: id,
+    )));
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(contentFinder, findsOneWidget);
   });
 
   // testWidgets(

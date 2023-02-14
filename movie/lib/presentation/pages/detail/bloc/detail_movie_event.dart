@@ -10,7 +10,7 @@ class OnLoadMovieDetail extends DetailMovieEvent {
   const OnLoadMovieDetail({required this.movieId});
 
   @override
-  List<Object?> get props => [movieId];
+  List<Object> get props => [movieId];
 }
 
 class OnLoadMovieRecommendations extends DetailMovieEvent {
@@ -19,7 +19,7 @@ class OnLoadMovieRecommendations extends DetailMovieEvent {
   const OnLoadMovieRecommendations({required this.movieId});
 
   @override
-  List<Object?> get props => [movieId];
+  List<Object> get props => [movieId];
 }
 
 class OnLoadWatchListMovieStatus extends DetailMovieEvent {
@@ -28,7 +28,7 @@ class OnLoadWatchListMovieStatus extends DetailMovieEvent {
   const OnLoadWatchListMovieStatus({required this.movieId});
 
   @override
-  List<Object?> get props => [movieId];
+  List<Object> get props => [movieId];
 }
 
 class OnSaveMovieToWatchList extends DetailMovieEvent {
@@ -37,7 +37,7 @@ class OnSaveMovieToWatchList extends DetailMovieEvent {
   const OnSaveMovieToWatchList({required this.movieData});
 
   @override
-  List<Object?> get props => [movieData];
+  List<Object> get props => [movieData];
 }
 
 class OnRemoveMovieFromWatchList extends DetailMovieEvent {
@@ -46,5 +46,5 @@ class OnRemoveMovieFromWatchList extends DetailMovieEvent {
   const OnRemoveMovieFromWatchList({required this.movieData});
 
   @override
-  List<Object?> get props => [movieData];
+  List<Object> get props => [movieData];
 }

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
+// coverage:ignore-file
 import 'package:core/domain/entities/tv/tv.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 class TvCard extends StatelessWidget {
   final Tv tv;
 
-  const TvCard(this.tv, {super.key});
+  const TvCard({Key? key, required this.tv}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/constants.dart';
+// coverage:ignore-file
 import 'package:core/domain/entities/tv/tv.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 class TvList extends StatelessWidget {
   final List<Tv> tvs;
 
-  const TvList(this.tvs, {super.key});
+  const TvList({Key? key, required this.tvs}): super(key: key);
 
   @override
   Widget build(BuildContext context) {

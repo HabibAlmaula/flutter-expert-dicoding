@@ -63,7 +63,7 @@ class WatchlistTvPageState extends State<WatchlistTvPage> with WidgetsBindingObs
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     final tv = state.tv[index];
-                    return TvCard(tv);
+                    return TvCard(tv: tv);
                   },
                   itemCount: state.tv.length,
                 );
@@ -78,12 +78,5 @@ class WatchlistTvPageState extends State<WatchlistTvPage> with WidgetsBindingObs
         ),
       ),
     );
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _watchListTvBloc.add(OnLoadWatchListTv());
-    }
   }
 }

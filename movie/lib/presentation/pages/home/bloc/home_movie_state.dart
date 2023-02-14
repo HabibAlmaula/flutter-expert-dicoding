@@ -29,15 +29,6 @@ class HomeMovieState extends Equatable {
       popularMovieState: RequestState.Empty,
       topRatedMovieState: RequestState.Empty);
 
-  HomeMovieState nowPlayingEmpty() =>
-      copyWith(nowPlayingMovieState: RequestState.Empty);
-
-  HomeMovieState popularEmpty() =>
-      copyWith(popularMovieState: RequestState.Empty);
-
-  HomeMovieState topRatedEmpty() =>
-      copyWith(topRatedMovieState: RequestState.Empty);
-
   HomeMovieState nowPlayingLoading() =>
       copyWith(nowPlayingMovieState: RequestState.Loading);
 

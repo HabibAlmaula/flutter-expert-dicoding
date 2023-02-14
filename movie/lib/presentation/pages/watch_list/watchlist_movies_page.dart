@@ -78,10 +78,4 @@ class WatchlistMoviesPageState extends State<WatchlistMoviesPage> with WidgetsBi
       ),
     );
   }
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _watchListMovieBloc.add(OnLoadWatchListMovie());
-    }
-  }
 }

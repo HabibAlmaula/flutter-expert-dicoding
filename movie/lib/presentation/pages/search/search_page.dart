@@ -29,7 +29,7 @@ class SearchPage extends StatelessWidget {
               ),
               textInputAction: TextInputAction.search,
               onChanged: (query){
-                context.read<SearchMovieBloc>().add(OnQueryChanged(query));
+                context.read<SearchMovieBloc>().add(OnQueryChanged(query: query));
               },
             ),
             const SizedBox(height: 16),
