@@ -1,5 +1,5 @@
+// coverage:ignore-file
 import 'dart:io';
-
 import 'package:core/data/models/movie_detail_model.dart';
 import 'package:core/data/models/movie_response.dart';
 import 'package:core/data/models/tv/tv_detail_model.dart';

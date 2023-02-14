@@ -6,15 +6,15 @@ abstract class HomeMovieEvent extends Equatable {
 
 class OnLoadNowPlayingMovies extends HomeMovieEvent {
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class OnLoadPopularMovies extends HomeMovieEvent {
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class OnLoadTopRatedMovies extends HomeMovieEvent {
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }

@@ -53,6 +53,50 @@ void main() {
     expect(progressBarFinder, findsOneWidget);
   });
 
+  testWidgets('Page should display content when loaded',
+      (WidgetTester tester) async {
+    whenListen(
+      mockDetailTvBloc,
+      Stream<DetailTvState>.fromIterable([
+        const DetailTvState().detailTvLoading(),
+        const DetailTvState().detailTvHasData(data: testTvDetail)
+      ]),
+    );
+    when(() => mockDetailTvBloc.state)
+        .thenReturn(const DetailTvState().detailTvHasData(data: testTvDetail));
+
+    final contentFinder = find.byType(DetailContent);
+
+    await tester.pumpWidget(makeTestableWidget(TvDetailPage(
+      id: id,
+    )));
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(contentFinder, findsOneWidget);
+  });
+
+  testWidgets('Page should display test when error',
+          (WidgetTester tester) async {
+        whenListen(
+          mockDetailTvBloc,
+          Stream<DetailTvState>.fromIterable([
+            const DetailTvState().detailTvLoading(),
+            const DetailTvState().detailTvError(message: "error")
+          ]),
+        );
+        when(() => mockDetailTvBloc.state)
+            .thenReturn(const DetailTvState().detailTvError(message: "error"));
+
+        final contentFinder = find.byType(Text);
+
+        await tester.pumpWidget(makeTestableWidget(TvDetailPage(
+          id: id,
+        )));
+        await tester.pump(const Duration(milliseconds: 500));
+
+        expect(contentFinder, findsOneWidget);
+      });
+
   // testWidgets(
   //     'Watchlist button should display add icon when Tv not added to watchlist',
   //     (WidgetTester tester) async {

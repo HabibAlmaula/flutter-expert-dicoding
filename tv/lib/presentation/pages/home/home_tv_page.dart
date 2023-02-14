@@ -73,7 +73,7 @@ class HomeTvPageState extends State<HomeTvPage> {
                         );
                       } else if (state.nowPlayingTvState ==
                           RequestState.Loaded) {
-                        return TvList(state.nowPlayingTv);
+                        return TvList(tvs: state.nowPlayingTv);
                       } else {
                         return const Text('Failed');
                       }
@@ -88,7 +88,7 @@ class HomeTvPageState extends State<HomeTvPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state.popularTvState == RequestState.Loaded) {
-                        return TvList(state.popularTv);
+                        return TvList(tvs: state.popularTv);
                       } else {
                         return const Text('Failed');
                       }
@@ -103,7 +103,7 @@ class HomeTvPageState extends State<HomeTvPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state.topRatedTvState == RequestState.Loaded) {
-                        return TvList(state.topRatedTv);
+                        return TvList(tvs: state.topRatedTv);
                       } else {
                         return const Text('Failed');
                       }

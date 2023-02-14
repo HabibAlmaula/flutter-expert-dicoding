@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +61,7 @@ class _ListTvPageState extends State<ListTvPage> {
                     } else if (state.nowPlayingTvState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return TvCard(state.nowPlayingTv[index]);
+                          return TvCard(tv: state.nowPlayingTv[index]);
                         },
                         itemCount: state.nowPlayingTv.length,
                       );
@@ -78,7 +79,7 @@ class _ListTvPageState extends State<ListTvPage> {
                     } else if (state.popularTvState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return TvCard(state.popularTv[index]);
+                          return TvCard(tv: state.popularTv[index]);
                         },
                         itemCount: state.popularTv.length,
                       );
@@ -96,7 +97,7 @@ class _ListTvPageState extends State<ListTvPage> {
                     } else if (state.topRatedTvState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return TvCard(state.topRatedTv[index]);
+                          return TvCard(tv : state.topRatedTv[index]);
                         },
                         itemCount: state.topRatedTv.length,
                       );

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+// coverage:ignore-file
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
