@@ -3,6 +3,7 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/app_enum.dart';
 import 'package:ditonton/domain/entities/movie/genre.dart';
 import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
+import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -111,26 +112,28 @@ class DetailContent extends StatelessWidget {
                                       context.read<DetailMovieBloc>().add(
                                           OnSaveMovieToWatchList(
                                               movieData: movie!));
+
+                                      context
+                                          .read<WatchListMovieBloc>()
+                                          .add(OnLoadWatchListMovie());
                                       //toast
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content:
                                                   Text("Added to Watchlist")));
-                                      // Provider.of<WatchlistMovieNotifier>(context,
-                                      //         listen: false)
-                                      //     .fetchWatchlistMovies();
                                     } else {
                                       context.read<DetailMovieBloc>().add(
                                           OnRemoveMovieFromWatchList(
                                               movieData: movie!));
+                                      context
+                                          .read<WatchListMovieBloc>()
+                                          .add(OnLoadWatchListMovie());
                                       //toast
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(
                                                   "Removed from Watchlist")));
                                       // Provider.of<WatchlistMovieNotifier>(context,
-                                      //         listen: false)
-                                      //     .fetchWatchlistMovies();
                                     }
                                   },
                                   child: Row(

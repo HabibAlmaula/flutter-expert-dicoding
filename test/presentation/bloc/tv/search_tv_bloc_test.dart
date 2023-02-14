@@ -73,4 +73,21 @@ void main() {
       verify: (bloc) {
         verify(() => mockSearchTv.execute(tQuery));
       });
+
+  blocTest<SearchTvBloc, SearchTvState>(
+      'Should emit [Loading, HasData with Empty] when query is Empty',
+      build: () {
+        when(() => mockSearchTv.execute(""))
+            .thenAnswer((realInvocation) async => Right(<Tv>[]));
+        return searchTvBloc;
+      },
+      act: (bloc) => bloc.add(OnQueryChanged("")),
+      wait: const Duration(milliseconds: 700),
+      expect: () => [
+            SearchLoading(),
+            SearchHasData(<Tv>[]),
+          ],
+      verify: (bloc) {
+        verify(() => mockSearchTv.execute(""));
+      });
 }

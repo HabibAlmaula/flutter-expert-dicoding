@@ -4,6 +4,7 @@ import 'package:ditonton/common/app_enum.dart';
 import 'package:ditonton/domain/entities/movie/genre.dart';
 import 'package:ditonton/domain/entities/tv/season.dart';
 import 'package:ditonton/presentation/pages/tv/detail/bloc/detail_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -113,27 +114,26 @@ class DetailContent extends StatelessWidget {
                                     if (!isAddedWatchlist) {
                                       context.read<DetailTvBloc>().add(
                                           OnSaveTvToWatchList(tvData: tv!));
+                                      context
+                                          .read<WatchListTvBloc>()
+                                          .add(OnLoadWatchListTv());
                                       //toast
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content:
                                                   Text("Added to Watchlist")));
-
-                                      // Provider.of<WatchListTvNotifier>(context,
-                                      //         listen: false)
-                                      //     .fetchWatchlistTv();
                                     } else {
                                       context.read<DetailTvBloc>().add(
                                           OnRemoveTvFromWatchList(tvData: tv!));
+
+                                      context
+                                          .read<WatchListTvBloc>()
+                                          .add(OnLoadWatchListTv());
                                       //toast
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(
                                                   "Removed from Watchlist")));
-
-                                      // Provider.of<WatchListTvNotifier>(context,
-                                      //         listen: false)
-                                      //     .fetchWatchlistTv();
                                     }
                                   },
                                   child: Row(

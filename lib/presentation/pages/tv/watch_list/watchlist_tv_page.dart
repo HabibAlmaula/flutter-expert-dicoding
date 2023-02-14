@@ -1,11 +1,10 @@
 import 'package:ditonton/common/app_enum.dart';
-import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'package:ditonton/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
 class WatchlistTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/watchlist-tv';
@@ -14,25 +13,23 @@ class WatchlistTvPage extends StatefulWidget {
   _WatchlistTvPageState createState() => _WatchlistTvPageState();
 }
 
-class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
+class _WatchlistTvPageState extends State<WatchlistTvPage> with WidgetsBindingObserver {
   late WatchListTvBloc _watchListTvBloc;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     _watchListTvBloc = context.read<WatchListTvBloc>();
-    super.initState();
     Future.microtask(() => _watchListTvBloc.add(OnLoadWatchListTv()));
+    super.initState();
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
-  void didPopNext() {
-    _watchListTvBloc.add(OnLoadWatchListTv());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +79,9 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
   }
 
   @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _watchListTvBloc.add(OnLoadWatchListTv());
+    }
   }
 }
