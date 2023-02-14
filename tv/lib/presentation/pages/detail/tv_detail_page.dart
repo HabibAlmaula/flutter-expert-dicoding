@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/core.dart';
 import 'package:core/domain/entities/movie/genre.dart';
 import 'package:core/domain/entities/tv/season.dart';
+import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -16,7 +18,7 @@ class TvDetailPage extends StatefulWidget {
 
   final int id;
 
-  const TvDetailPage({super.key, required this.id});
+  const TvDetailPage({super.key, @PathParam('id') required this.id});
 
   @override
   TvDetailPageState createState() => TvDetailPageState();
@@ -213,7 +215,8 @@ class DetailContent extends StatelessWidget {
                                                 onTap: () {
                                                   Logger().i(
                                                       "RECOMMENDATION_CLICKED");
-                                                },
+                                                context.pushRoute(TvDetailRoute(id: tv.id));
+                                                  },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       const BorderRadius.all(
@@ -275,7 +278,7 @@ class DetailContent extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.pop(context);
+                    context.popRoute();
                   },
                 ),
               ),

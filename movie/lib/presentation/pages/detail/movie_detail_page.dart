@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core/common/app_enum.dart';
 import 'package:core/common/constants.dart';
 import 'package:core/domain/entities/movie/genre.dart';
+import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -11,17 +13,17 @@ import 'package:movie/presentation/pages/watch_list/bloc/watch_list_movie_bloc.d
 import 'bloc/detail_movie_bloc.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail-movie';
+  static const ROUTE_NAME = '/detail-movie/:id';
 
   final int id;
 
-  const MovieDetailPage({super.key, required this.id});
+  const MovieDetailPage({super.key, @PathParam('id') required this.id});
 
   @override
-  _MovieDetailPageState createState() => _MovieDetailPageState();
+  MovieDetailPageState createState() => MovieDetailPageState();
 }
 
-class _MovieDetailPageState extends State<MovieDetailPage> {
+class MovieDetailPageState extends State<MovieDetailPage> {
   late DetailMovieBloc _detailMovieBloc;
 
   @override
@@ -209,18 +211,7 @@ class DetailContent extends StatelessWidget {
                                                 onTap: () {
                                                   Logger().i(
                                                       "RECOMMENDATION_CLICKED");
-                                                  // Future.microtask(() {
-                                                  //   Provider.of<MovieDetailNotifier>(
-                                                  //           context,
-                                                  //           listen: false)
-                                                  //       .fetchMovieDetail(
-                                                  //           movie.id);
-                                                  //   Provider.of<MovieDetailNotifier>(
-                                                  //           context,
-                                                  //           listen: false)
-                                                  //       .loadWatchlistStatus(
-                                                  //           movie.id);
-                                                  // });
+                                                  context.pushRoute(MovieDetailRoute(id: movie.id));
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:
@@ -281,7 +272,7 @@ class DetailContent extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.pop(context);
+                    context.navigateBack();
                   },
                 ),
               ),

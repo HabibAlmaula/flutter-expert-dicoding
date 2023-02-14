@@ -35,7 +35,10 @@ class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<ListMoviesRouteArgs>();
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: ListMoviesPage(moviesType: args.moviesType),
+        child: ListMoviesPage(
+          key: args.key,
+          moviesType: args.moviesType,
+        ),
       );
     },
     ListTvRoute.name: (routeData) {
@@ -51,39 +54,51 @@ class _$AppRouter extends RootStackRouter {
     SearchRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: SearchPage(),
+        child: const SearchPage(),
       );
     },
     SearchTvRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: SearchTvPage(),
+        child: const SearchTvPage(),
       );
     },
     MovieDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<MovieDetailRouteArgs>();
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<MovieDetailRouteArgs>(
+          orElse: () => MovieDetailRouteArgs(id: pathParams.getInt('id')));
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: MovieDetailPage(id: args.id),
+        child: MovieDetailPage(
+          key: args.key,
+          id: args.id,
+        ),
+        maintainState: false,
       );
     },
     TvDetailRoute.name: (routeData) {
-      final args = routeData.argsAs<TvDetailRouteArgs>();
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<TvDetailRouteArgs>(
+          orElse: () => TvDetailRouteArgs(id: pathParams.getInt('id')));
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: TvDetailPage(id: args.id),
+        child: TvDetailPage(
+          key: args.key,
+          id: args.id,
+        ),
+        maintainState: false,
       );
     },
     HomeMovieRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: HomeMoviePage(),
+        child: const HomeMoviePage(),
       );
     },
     HomeTvRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: HomeTvPage(),
+        child: const HomeTvPage(),
       );
     },
     MainWatchListRoute.name: (routeData) {
@@ -95,7 +110,7 @@ class _$AppRouter extends RootStackRouter {
     AboutRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: AboutPage(),
+        child: const AboutPage(),
       );
     },
   };
@@ -175,7 +190,7 @@ class _$AppRouter extends RootStackRouter {
         ),
         RouteConfig(
           MovieDetailRoute.name,
-          path: '/detail-movie',
+          path: '/detail-movie/:id',
           usesPathAsKey: true,
         ),
         RouteConfig(
@@ -229,24 +244,34 @@ class MainRouteArgs {
 /// generated route for
 /// [ListMoviesPage]
 class ListMoviesRoute extends PageRouteInfo<ListMoviesRouteArgs> {
-  ListMoviesRoute({required FilterType moviesType})
-      : super(
+  ListMoviesRoute({
+    Key? key,
+    required FilterType moviesType,
+  }) : super(
           ListMoviesRoute.name,
           path: '/list-movie',
-          args: ListMoviesRouteArgs(moviesType: moviesType),
+          args: ListMoviesRouteArgs(
+            key: key,
+            moviesType: moviesType,
+          ),
         );
 
   static const String name = 'ListMoviesRoute';
 }
 
 class ListMoviesRouteArgs {
-  const ListMoviesRouteArgs({required this.moviesType});
+  const ListMoviesRouteArgs({
+    this.key,
+    required this.moviesType,
+  });
+
+  final Key? key;
 
   final FilterType moviesType;
 
   @override
   String toString() {
-    return 'ListMoviesRouteArgs{moviesType: $moviesType}';
+    return 'ListMoviesRouteArgs{key: $key, moviesType: $moviesType}';
   }
 }
 
@@ -311,48 +336,70 @@ class SearchTvRoute extends PageRouteInfo<void> {
 /// generated route for
 /// [MovieDetailPage]
 class MovieDetailRoute extends PageRouteInfo<MovieDetailRouteArgs> {
-  MovieDetailRoute({required int id})
-      : super(
+  MovieDetailRoute({
+    Key? key,
+    required int id,
+  }) : super(
           MovieDetailRoute.name,
-          path: '/detail-movie',
-          args: MovieDetailRouteArgs(id: id),
+          path: '/detail-movie/:id',
+          args: MovieDetailRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'id': id},
         );
 
   static const String name = 'MovieDetailRoute';
 }
 
 class MovieDetailRouteArgs {
-  const MovieDetailRouteArgs({required this.id});
+  const MovieDetailRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
 
   final int id;
 
   @override
   String toString() {
-    return 'MovieDetailRouteArgs{id: $id}';
+    return 'MovieDetailRouteArgs{key: $key, id: $id}';
   }
 }
 
 /// generated route for
 /// [TvDetailPage]
 class TvDetailRoute extends PageRouteInfo<TvDetailRouteArgs> {
-  TvDetailRoute({required int id})
-      : super(
+  TvDetailRoute({
+    Key? key,
+    required int id,
+  }) : super(
           TvDetailRoute.name,
           path: '/detail-tv/:id',
-          args: TvDetailRouteArgs(id: id),
+          args: TvDetailRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'id': id},
         );
 
   static const String name = 'TvDetailRoute';
 }
 
 class TvDetailRouteArgs {
-  const TvDetailRouteArgs({required this.id});
+  const TvDetailRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
 
   final int id;
 
   @override
   String toString() {
-    return 'TvDetailRouteArgs{id: $id}';
+    return 'TvDetailRouteArgs{key: $key, id: $id}';
   }
 }
 

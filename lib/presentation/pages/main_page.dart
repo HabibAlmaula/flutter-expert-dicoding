@@ -24,11 +24,15 @@ class MainPage extends StatelessWidget {
         final tabsRouter = AutoTabsRouter.of(context);
         return WillPopScope(
           onWillPop: () async {
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return ExitAlertDialog();
-                });
+            if(tabsRouter.activeIndex != 0){
+              tabsRouter.setActiveIndex(0);
+            }else{
+              showDialog(
+                  context: context,
+                  builder: (_) {
+                    return ExitAlertDialog();
+                  });
+            }
             return false;
           },
           child: Scaffold(

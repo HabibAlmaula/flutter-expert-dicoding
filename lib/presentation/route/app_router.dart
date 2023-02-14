@@ -74,11 +74,13 @@ part 'app_router.gr.dart';
     page: SearchTvPage,
   ),
   AutoRoute(
+    maintainState: false,
     usesPathAsKey: true,
     path: MovieDetailPage.ROUTE_NAME,
     page: MovieDetailPage,
   ),
   AutoRoute(
+    maintainState: false,
     usesPathAsKey: true,
     path: TvDetailPage.ROUTE_NAME,
     page: TvDetailPage,
