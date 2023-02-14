@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:core/common/app_enum.dart';
 import 'package:core/domain/entities/movie/movie.dart';
 import 'package:core/domain/entities/movie/movie_detail.dart';
@@ -8,6 +7,7 @@ import 'package:core/domain/usecases/movie/get_watchlist_status.dart';
 import 'package:core/domain/usecases/movie/remove_watchlist.dart';
 import 'package:core/domain/usecases/movie/save_watchlist.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'detail_movie_event.dart';
 

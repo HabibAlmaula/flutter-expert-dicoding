@@ -13,7 +13,7 @@ import 'package:movie/presentation/pages/watch_list/bloc/watch_list_movie_bloc.d
 import 'bloc/detail_movie_bloc.dart';
 
 class MovieDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail-movie/:id';
+  static const routeName = '/detail-movie/:id';
 
   final int id;
 

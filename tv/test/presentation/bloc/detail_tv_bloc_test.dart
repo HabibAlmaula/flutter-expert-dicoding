@@ -69,7 +69,7 @@ void main() {
 
   void arrangeUsecase() {
     when(() => mockGetTvDetail.execute(tId))
-        .thenAnswer((_) async => Right(testTvDetail));
+        .thenAnswer((_) async => const Right(testTvDetail));
     when(() => mockGetTvRecommendations.execute(tId))
         .thenAnswer((_) async => Right(tTvList));
   }
@@ -108,7 +108,7 @@ void main() {
         'should emit [Loading, Error] when get detail tv unsuccessfully',
         build: () {
           when(() => mockGetTvDetail.execute(tId))
-              .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+              .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
           return detailTvBloc;
         },
         act: (bloc) => bloc.add(const OnLoadTvDetail(tvId: tId)),
@@ -155,7 +155,7 @@ void main() {
         'should emit [Loading, Error] when get recommendation tv unsuccessfully',
         build: () {
           when(() => mockGetTvRecommendations.execute(tId))
-              .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+              .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
           return detailTvBloc;
         },
         act: (bloc) => bloc.add(const OnLoadTvRecommendations(tvId: tId)),
@@ -191,7 +191,7 @@ void main() {
               .thenAnswer((_) async => const Right('Added to Watchlist'));
           return detailTvBloc;
         },
-        act: (bloc) => bloc.add(OnSaveTvToWatchList(tvData: testTvDetail)),
+        act: (bloc) => bloc.add(const OnSaveTvToWatchList(tvData: testTvDetail)),
         verify: (bloc) {
           verify(() => mockSaveWatchList.execute(testTvDetail));
         });
@@ -203,7 +203,7 @@ void main() {
               .thenAnswer((_) async => const Right('Removed from Watchlist'));
           return detailTvBloc;
         },
-        act: (bloc) => bloc.add(OnRemoveTvFromWatchList(tvData: testTvDetail)),
+        act: (bloc) => bloc.add(const OnRemoveTvFromWatchList(tvData: testTvDetail)),
         verify: (bloc) {
           verify(() => mockRemoveWatchList.execute(testTvDetail));
         });
@@ -215,7 +215,7 @@ void main() {
               .thenAnswer((_) async => const Right('Removed from Watchlist'));
           return detailTvBloc;
         },
-        act: (bloc) => bloc.add(OnRemoveTvFromWatchList(tvData: testTvDetail)),
+        act: (bloc) => bloc.add(const OnRemoveTvFromWatchList(tvData: testTvDetail)),
         verify: (bloc) {
           verify(() => mockRemoveWatchList.execute(testTvDetail));
         });
@@ -224,14 +224,14 @@ void main() {
         'should update watchlist message when add watchlist failed',
         build: () {
           when(() => mockSaveWatchList.execute(testTvDetail))
-              .thenAnswer((_) async => Left(DatabaseFailure('Failed')));
+              .thenAnswer((_) async => const Left(DatabaseFailure('Failed')));
           return detailTvBloc;
         },
         expect: () => [
               const DetailTvState().copyWith(
                   isSavedToWatchList: false, watchListMessage: 'Failed')
             ],
-        act: (bloc) => bloc.add(OnSaveTvToWatchList(tvData: testTvDetail)),
+        act: (bloc) => bloc.add(const OnSaveTvToWatchList(tvData: testTvDetail)),
         verify: (bloc) {
           verify(() => mockSaveWatchList.execute(testTvDetail));
         });
@@ -240,14 +240,14 @@ void main() {
         'should update watchlist message when remove watchlist failed',
         build: () {
           when(() => mockRemoveWatchList.execute(testTvDetail))
-              .thenAnswer((_) async => Left(DatabaseFailure('Failed')));
+              .thenAnswer((_) async => const Left(DatabaseFailure('Failed')));
           return detailTvBloc;
         },
         expect: () => [
               const DetailTvState().copyWith(
                   isSavedToWatchList: true, watchListMessage: 'Failed')
             ],
-        act: (bloc) => bloc.add(OnRemoveTvFromWatchList(tvData: testTvDetail)),
+        act: (bloc) => bloc.add(const OnRemoveTvFromWatchList(tvData: testTvDetail)),
         verify: (bloc) {
           verify(() => mockRemoveWatchList.execute(testTvDetail));
         });

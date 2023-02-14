@@ -4,7 +4,7 @@ import 'package:tv/presentation/pages/watch_list/watchlist_tv_page.dart';
 
 class MainWatchListPage extends StatefulWidget {
   const MainWatchListPage({Key? key}) : super(key: key);
-  static const ROUTE_NAME = "main-watchlist";
+  static const routeName = "main-watchlist";
 
   @override
   State<MainWatchListPage> createState() => _MainWatchListPageState();

@@ -9,7 +9,7 @@ import 'package:tv/presentation/widgets/tv_list_home.dart';
 import 'bloc/home_tv_bloc.dart';
 
 class HomeTvPage extends StatefulWidget {
-  static const ROUTE_NAME = "home-tv";
+  static const routeName = "home-tv";
 
   const HomeTvPage({super.key});
 
@@ -39,7 +39,7 @@ class HomeTvPageState extends State<HomeTvPage> {
         actions: [
           IconButton(
             onPressed: () {
-              // Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
+              // Navigator.pushNamed(context, SearchPage.routeName);
               context.pushRoute(const SearchTvRoute());
             },
             icon: const Icon(Icons.search),

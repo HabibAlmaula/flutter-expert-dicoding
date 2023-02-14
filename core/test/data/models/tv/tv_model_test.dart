@@ -3,7 +3,7 @@ import 'package:core/domain/entities/tv/tv.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final tTvModel = TvModel(
+  const tTvModel = TvModel(
       backdropPath: '/ciToI1GfkWmzavJIPXh9Xe0Neon.jpg',
       firstAirDate: "2019-02-15",
       genreIds: [10759, 10765, 18],
@@ -23,10 +23,10 @@ void main() {
   final tTv = Tv(
       backdropPath: '/ciToI1GfkWmzavJIPXh9Xe0Neon.jpg',
       firstAirDate: "2019-02-15",
-      genreIds: [10759, 10765, 18],
+      genreIds: const [10759, 10765, 18],
       id: 75006,
       name: "The Umbrella Academy",
-      originCountry: ["US"],
+      originCountry: const ["US"],
       originalLanguage: "en",
       originalName: "The Umbrella Academy",
       overview:

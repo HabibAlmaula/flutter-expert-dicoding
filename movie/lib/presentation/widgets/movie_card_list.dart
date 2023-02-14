@@ -56,7 +56,7 @@ class MovieCard extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: CachedNetworkImage(
                   imageUrl: movie.posterPath != "null"
-                      ? '$BASE_IMAGE_URL${movie.posterPath}'
+                      ? '$baseImageUrl${movie.posterPath}'
                       : "https://www.unas.ac.id/wp-content/uploads/2021/08/placeholder-17.png",
                   width: 80,
                   placeholder: (context, url) => const Center(

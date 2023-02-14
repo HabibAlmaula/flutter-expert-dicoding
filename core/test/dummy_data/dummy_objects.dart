@@ -11,7 +11,7 @@ import 'package:core/domain/entities/tv/tv_detail.dart';
 final testMovie = Movie(
   adult: false,
   backdropPath: '/muth4OYamXf41G2evdrLEg8d3om.jpg',
-  genreIds: [14, 28],
+  genreIds: const [14, 28],
   id: 557,
   originalTitle: 'Spider-Man',
   overview:
@@ -27,7 +27,7 @@ final testMovie = Movie(
 
 final testMovieList = [testMovie];
 
-final testMovieDetail = MovieDetail(
+const testMovieDetail = MovieDetail(
   adult: false,
   backdropPath: 'backdropPath',
   genres: [Genre(id: 1, name: 'Action')],
@@ -49,7 +49,7 @@ final testWatchlistMovie = Movie.watchlist(
   overview: 'overview',
 );
 
-final testMovieTable = MovieTable(
+const testMovieTable = MovieTable(
   id: 1,
   title: 'title',
   posterPath: 'posterPath',
@@ -68,10 +68,10 @@ final testMovieMap = {
 final testTv = Tv(
     backdropPath: 'backdropPath',
     firstAirDate: "2022-02-02",
-    genreIds: [1, 1, 1],
+    genreIds: const [1, 1, 1],
     id: 1,
     name: "name",
-    originCountry: ["c"],
+    originCountry: const ["c"],
     originalLanguage: "c",
     originalName: "name",
     overview:
@@ -83,7 +83,7 @@ final testTv = Tv(
 
 final testTvList = [testTv];
 
-final testTvDetail = TvDetail(
+const testTvDetail = TvDetail(
   adult: false,
   backdropPath: "backdropPath",
   genres: [Genre(id: 1, name: 'name')],
@@ -135,7 +135,7 @@ final testWatchlistTv = Tv.watchlist(
   posterPath: "posterPath",
 );
 
-final testTvTable = TvTable(
+const testTvTable = TvTable(
   id: 1,
   name: "name",
   posterPath: "posterPath",

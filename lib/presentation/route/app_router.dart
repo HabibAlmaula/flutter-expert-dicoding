@@ -21,7 +21,7 @@ part 'app_router.gr.dart';
   AutoRoute(
     usesPathAsKey: true,
     initial: true,
-    path: SplashPage.ROUTE_NAME,
+    path: SplashPage.routeName,
     page: SplashPage,
     children: [
       RedirectRoute(path: '*', redirectTo: ''),
@@ -34,55 +34,55 @@ part 'app_router.gr.dart';
       children: [
         AutoRoute(
           usesPathAsKey: true,
-          path: HomeMoviePage.ROUTE_NAME,
+          path: HomeMoviePage.routeName,
           page: HomeMoviePage,
         ),
         AutoRoute(
           usesPathAsKey: true,
-          path: HomeTvPage.ROUTE_NAME,
+          path: HomeTvPage.routeName,
           page: HomeTvPage,
         ),
         AutoRoute(
           usesPathAsKey: true,
-          path: MainWatchListPage.ROUTE_NAME,
+          path: MainWatchListPage.routeName,
           page: MainWatchListPage,
         ),
         AutoRoute(
           usesPathAsKey: true,
-          path: AboutPage.ROUTE_NAME,
+          path: AboutPage.routeName,
           page: AboutPage,
         ),
       ]),
   AutoRoute(
     usesPathAsKey: true,
-    path: ListMoviesPage.ROUTE_NAME,
+    path: ListMoviesPage.routeName,
     page: ListMoviesPage,
   ),
   AutoRoute(
     usesPathAsKey: true,
-    path: ListTvPage.ROUTE_NAME,
+    path: ListTvPage.routeName,
     page: ListTvPage,
   ),
   AutoRoute(
     usesPathAsKey: true,
-    path: SearchPage.ROUTE_NAME,
+    path: SearchPage.routeName,
     page: SearchPage,
   ),
   AutoRoute(
     usesPathAsKey: true,
-    path: SearchTvPage.ROUTE_NAME,
+    path: SearchTvPage.routeName,
     page: SearchTvPage,
   ),
   AutoRoute(
     maintainState: false,
     usesPathAsKey: true,
-    path: MovieDetailPage.ROUTE_NAME,
+    path: MovieDetailPage.routeName,
     page: MovieDetailPage,
   ),
   AutoRoute(
     maintainState: false,
     usesPathAsKey: true,
-    path: TvDetailPage.ROUTE_NAME,
+    path: TvDetailPage.routeName,
     page: TvDetailPage,
   ),
 ])

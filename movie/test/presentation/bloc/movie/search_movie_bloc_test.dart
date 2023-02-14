@@ -48,7 +48,7 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tMovieList));
         return searchMovieBloc;
       },
-      act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
+      act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
       wait: const Duration(milliseconds: 700),
       expect: () => [
             SearchLoading(),
@@ -62,14 +62,14 @@ void main() {
       'Should emit [Loading, Error] when get searcg is unsuccessfully',
       build: () {
         when(() => mockSearchMovies.execute(tQuery)).thenAnswer(
-            (realInvocation) async => Left(ServerFailure('Server Failure')));
+            (realInvocation) async => const Left(ServerFailure('Server Failure')));
         return searchMovieBloc;
       },
-      act: (bloc) => bloc.add(OnQueryChanged(tQuery)),
+      act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
       wait: const Duration(milliseconds: 700),
       expect: () => [
             SearchLoading(),
-            SearchError('Server Failure'),
+            const SearchError('Server Failure'),
           ],
       verify: (bloc) {
         verify(() => mockSearchMovies.execute(tQuery));

@@ -6,7 +6,7 @@ import 'package:movie/presentation/widgets/movie_card_list.dart';
 import 'bloc/search_movie_bloc.dart';
 
 class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search';
+  static const routeName = '/search';
 
   const SearchPage({super.key});
 

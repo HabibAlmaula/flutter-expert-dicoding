@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
-  static const ROUTE_NAME = "/splash-page";
+  static const routeName = "/splash-page";
 
   @override
   State<SplashPage> createState() => _SplashPageState();

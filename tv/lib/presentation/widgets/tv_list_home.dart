@@ -28,7 +28,7 @@ class TvList extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: tv.posterPath != "null"
-                      ? '$BASE_IMAGE_URL${tv.posterPath}'
+                      ? '$baseImageUrl${tv.posterPath}'
                       : "https://www.unas.ac.id/wp-content/uploads/2021/08/placeholder-17.png",
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),

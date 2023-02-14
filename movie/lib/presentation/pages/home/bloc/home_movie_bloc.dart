@@ -1,10 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:core/common/app_enum.dart';
 import 'package:core/domain/entities/movie/movie.dart';
 import 'package:core/domain/usecases/movie/get_now_playing_movies.dart';
 import 'package:core/domain/usecases/movie/get_popular_movies.dart';
 import 'package:core/domain/usecases/movie/get_top_rated_movies.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'home_movie_event.dart';
 
@@ -22,7 +22,7 @@ class HomeMovieBloc extends Bloc<HomeMovieEvent, HomeMovieState> {
   })  : _getNowPlayingMovies = getNowPlayingMovies,
         _getPopularMovies = getPopularMovies,
         _getTopRatedMovies = getTopRatedMovies,
-        super(HomeMovieState()) {
+        super(const HomeMovieState()) {
     on<OnLoadNowPlayingMovies>(_onLoadNowPlayingMovies);
     on<OnLoadPopularMovies>(_onLoadPopularMovies);
     on<OnLoadTopRatedMovies>(_onLoadTopRatedMovies);

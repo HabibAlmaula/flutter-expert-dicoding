@@ -45,7 +45,7 @@ void main() {
       'should return error when data is unsuccessful',
       build: () {
         when(() => mockGetWatchListMovies.execute())
-            .thenAnswer((realInvocation) async => Left(DatabaseFailure("Can't get data")));
+            .thenAnswer((realInvocation) async => const Left(DatabaseFailure("Can't get data")));
         return watchListMovieBloc;
       },
       act: (bloc) => bloc.add(OnLoadWatchListMovie()),

@@ -5,7 +5,7 @@ import 'package:tv/presentation/pages/home/bloc/home_tv_bloc.dart';
 import 'package:tv/presentation/widgets/tv_card_list.dart';
 
 class ListTvPage extends StatefulWidget {
-  static const ROUTE_NAME = '/list-tv';
+  static const routeName = '/list-tv';
   final FilterType tvType;
 
   const ListTvPage({Key? key, required this.tvType}) : super(key: key);

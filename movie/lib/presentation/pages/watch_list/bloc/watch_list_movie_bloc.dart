@@ -1,8 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:core/core.dart';
 import 'package:core/domain/entities/movie/movie.dart';
 import 'package:core/domain/usecases/movie/get_watchlist_movies.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'watch_list_movie_event.dart';
 
@@ -14,7 +14,7 @@ class WatchListMovieBloc
 
   WatchListMovieBloc({required GetWatchlistMovies getWatchlistMovies})
       : _getWatchlistMovies = getWatchlistMovies,
-        super(WatchListMovieState()) {
+        super(const WatchListMovieState()) {
     on<OnLoadWatchListMovie>(_onLoadWatchListMove);
   }
 
