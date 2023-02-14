@@ -73,7 +73,7 @@ void main() {
         'Should emit [Loading, Error] when get data is unsuccessfully',
         build: () {
           when(() => mockGetNowPlayingTv.execute()).thenAnswer(
-              (invocation) async => Left(ServerFailure('Server Failure')));
+              (invocation) async => const Left(ServerFailure('Server Failure')));
           return homeTvBloc;
         },
         act: (bloc) => bloc.add(OnLoadNowPlayingTv()),
@@ -111,7 +111,7 @@ void main() {
         'Should emit [Loading, Error] when get data is unsuccessfully',
         build: () {
           when(() => mockGetPopularTv.execute()).thenAnswer(
-              (invocation) async => Left(ServerFailure('Server Failure')));
+              (invocation) async => const Left(ServerFailure('Server Failure')));
           return homeTvBloc;
         },
         act: (bloc) => bloc.add(OnLoadPopularTv()),
@@ -149,7 +149,7 @@ void main() {
         'Should emit [Loading, Error] when get data is unsuccessfully',
         build: () {
           when(() => mockGetTopRatedTv.execute()).thenAnswer(
-              (invocation) async => Left(ServerFailure('Server Failure')));
+              (invocation) async => const Left(ServerFailure('Server Failure')));
           return homeTvBloc;
         },
         act: (bloc) => bloc.add(OnLoadTopRatedTv()),

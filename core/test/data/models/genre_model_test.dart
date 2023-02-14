@@ -4,11 +4,11 @@ import 'package:core/domain/entities/movie/genre.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main(){
-  final genreModel = GenreModel(
+  const genreModel = GenreModel(
       id: 1,
       name: 'name'
   );
-  final genre = Genre(
+  const genre = Genre(
       id: 1,
       name: 'name'
   );

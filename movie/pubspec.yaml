@@ -18,6 +18,8 @@ dependencies:
   dartz: ^0.10.0-nullsafety.2
   auto_route: ^5.0.4
   equatable: ^2.0.2
+  rxdart: ^0.27.7
+
 
 
   core:

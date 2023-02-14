@@ -17,7 +17,7 @@ void main() {
   });
 
   final tTv = <Tv>[];
-  final tQuery = 'umbrella';
+  const tQuery = 'umbrella';
 
   test('should get list of Tv from the repository', () async {
     // arrange

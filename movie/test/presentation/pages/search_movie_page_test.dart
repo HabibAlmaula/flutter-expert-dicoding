@@ -63,7 +63,7 @@ void main() {
 
   testWidgets('Page should show ListView when search is done, and found Movie',
       (WidgetTester tester) async {
-    when(() => mockSearchMovieBloc.state).thenReturn(SearchHasData(const <Movie>[]));
+    when(() => mockSearchMovieBloc.state).thenReturn(const SearchHasData(<Movie>[]));
 
     final listViewFinder = find.byType(ListView);
 

@@ -68,9 +68,9 @@ void main() {
     );
   });
 
-  void _arrangeUsecase() {
+  void arrangeUsecase() {
     when(() => mockGetMovieDetail.execute(tId))
-        .thenAnswer((_) async => Right(testMovieDetail));
+        .thenAnswer((_) async => const Right(testMovieDetail));
     when(() => mockGetMovieRecommendation.execute(tId))
         .thenAnswer((_) async => Right(tMovies));
   }
@@ -82,7 +82,7 @@ void main() {
     blocTest<DetailMovieBloc, DetailMovieState>(
         'should get movie detail data from the usecase',
         build: () {
-          _arrangeUsecase();
+          arrangeUsecase();
           return detailMovieBloc;
         },
         act: (bloc) => bloc.add(const OnLoadMovieDetail(movieId: tId)),
@@ -93,7 +93,7 @@ void main() {
     blocTest<DetailMovieBloc, DetailMovieState>(
         'should emit [Loading, HasData] when detail movie gotten successfully',
         build: () {
-          _arrangeUsecase();
+          arrangeUsecase();
           return detailMovieBloc;
         },
         act: (bloc) => bloc.add(const OnLoadMovieDetail(movieId: tId)),
@@ -109,7 +109,7 @@ void main() {
         'should emit [Loading, Error] when get detail movie unsuccessfully',
         build: () {
           when(() => mockGetMovieDetail.execute(tId))
-              .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+              .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
           return detailMovieBloc;
         },
         act: (bloc) => bloc.add(const OnLoadMovieDetail(movieId: tId)),
@@ -129,7 +129,7 @@ void main() {
     blocTest<DetailMovieBloc, DetailMovieState>(
         'should get movie recommendation data from the usecase',
         build: () {
-          _arrangeUsecase();
+          arrangeUsecase();
           return detailMovieBloc;
         },
         act: (bloc) => bloc.add(const OnLoadMovieRecommendations(movieId: tId)),
@@ -140,7 +140,7 @@ void main() {
     blocTest<DetailMovieBloc, DetailMovieState>(
         'should emit [Loading, HasData] when recommendation movie gotten successfully',
         build: () {
-          _arrangeUsecase();
+          arrangeUsecase();
           return detailMovieBloc;
         },
         act: (bloc) => bloc.add(const OnLoadMovieRecommendations(movieId: tId)),
@@ -156,7 +156,7 @@ void main() {
         'should emit [Loading, Error] when get recommendation movie unsuccessfully',
         build: () {
           when(() => mockGetMovieRecommendation.execute(tId))
-              .thenAnswer((_) async => Left(ServerFailure('Server Failure')));
+              .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
           return detailMovieBloc;
         },
         act: (bloc) => bloc.add(const OnLoadMovieRecommendations(movieId: tId)),
@@ -194,7 +194,7 @@ void main() {
           return detailMovieBloc;
         },
         act: (bloc) =>
-            bloc.add(OnSaveMovieToWatchList(movieData: testMovieDetail)),
+            bloc.add(const OnSaveMovieToWatchList(movieData: testMovieDetail)),
         verify: (bloc) {
           verify(() => mockSaveWatchList.execute(testMovieDetail));
         });
@@ -207,7 +207,7 @@ void main() {
           return detailMovieBloc;
         },
         act: (bloc) =>
-            bloc.add(OnRemoveMovieFromWatchList(movieData: testMovieDetail)),
+            bloc.add(const OnRemoveMovieFromWatchList(movieData: testMovieDetail)),
         verify: (bloc) {
           verify(() => mockRemoveWatchList.execute(testMovieDetail));
         });
@@ -220,7 +220,7 @@ void main() {
           return detailMovieBloc;
         },
         act: (bloc) =>
-            bloc.add(OnRemoveMovieFromWatchList(movieData: testMovieDetail)),
+            bloc.add(const OnRemoveMovieFromWatchList(movieData: testMovieDetail)),
         verify: (bloc) {
           verify(() => mockRemoveWatchList.execute(testMovieDetail));
         });
@@ -229,7 +229,7 @@ void main() {
         'should update watchlist message when add watchlist failed',
         build: () {
           when(() => mockSaveWatchList.execute(testMovieDetail))
-              .thenAnswer((_) async => Left(DatabaseFailure('Failed')));
+              .thenAnswer((_) async => const Left(DatabaseFailure('Failed')));
           return detailMovieBloc;
         },
         expect: () => [
@@ -237,7 +237,7 @@ void main() {
                   isSavedToWatchList: false, watchListMessage: 'Failed')
             ],
         act: (bloc) =>
-            bloc.add(OnSaveMovieToWatchList(movieData: testMovieDetail)),
+            bloc.add(const OnSaveMovieToWatchList(movieData: testMovieDetail)),
         verify: (bloc) {
           verify(() => mockSaveWatchList.execute(testMovieDetail));
         });
@@ -246,7 +246,7 @@ void main() {
         'should update watchlist message when remove watchlist failed',
         build: () {
           when(() => mockRemoveWatchList.execute(testMovieDetail))
-              .thenAnswer((_) async => Left(DatabaseFailure('Failed')));
+              .thenAnswer((_) async => const Left(DatabaseFailure('Failed')));
           return detailMovieBloc;
         },
         expect: () => [
@@ -254,7 +254,7 @@ void main() {
               isSavedToWatchList: true, watchListMessage: 'Failed')
         ],
         act: (bloc) =>
-            bloc.add(OnRemoveMovieFromWatchList(movieData: testMovieDetail)),
+            bloc.add(const OnRemoveMovieFromWatchList(movieData: testMovieDetail)),
         verify: (bloc) {
           verify(() => mockRemoveWatchList.execute(testMovieDetail));
         });

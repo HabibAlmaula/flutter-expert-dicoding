@@ -10,7 +10,7 @@ import 'package:movie/presentation/widgets/sub_heading_home.dart';
 import 'bloc/home_movie_bloc.dart';
 
 class HomeMoviePage extends StatefulWidget {
-  static const ROUTE_NAME = "movie";
+  static const routeName = "movie";
 
   const HomeMoviePage({super.key});
 
@@ -40,8 +40,8 @@ class HomeMoviePageState extends State<HomeMoviePage> {
         actions: [
           IconButton(
             onPressed: () {
-              // Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
-              context.pushRoute(SearchRoute());
+              // Navigator.pushNamed(context, SearchPage.routeName);
+              context.pushRoute(const SearchRoute());
             },
             icon: const Icon(Icons.search),
           )
@@ -82,10 +82,10 @@ class HomeMoviePageState extends State<HomeMoviePage> {
                     SubHeadingHome(
                         title: 'Popular',
                         onTap: () =>
-                            // Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                            // Navigator.pushNamed(context, PopularMoviesPage.routeName),
                             context.pushRoute(ListMoviesRoute(
                                 moviesType: FilterType.Popular))),
-                    // context.push(PopularMoviesPage.ROUTE_NAME)),
+                    // context.push(PopularMoviesPage.routeName)),
                     Builder(builder: (context) {
                       if (state.popularMovieState == RequestState.Loading) {
                         return const Center(
@@ -101,10 +101,10 @@ class HomeMoviePageState extends State<HomeMoviePage> {
                     SubHeadingHome(
                         title: 'Top Rated',
                         onTap: () =>
-                            // Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                            // Navigator.pushNamed(context, TopRatedMoviesPage.routeName),
                             context.pushRoute(ListMoviesRoute(
                                 moviesType: FilterType.TopRated))),
-                    // context.push(TopRatedMoviesPage.ROUTE_NAME)),
+                    // context.push(TopRatedMoviesPage.routeName)),
                     Builder(builder: (context) {
                       if (state.topRatedMovieState == RequestState.Loading) {
                         return const Center(

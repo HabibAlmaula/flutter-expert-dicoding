@@ -5,16 +5,16 @@ import 'package:movie/presentation/pages/home/bloc/home_movie_bloc.dart';
 import 'package:movie/presentation/widgets/movie_card_list.dart';
 
 class ListMoviesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/list-movie';
+  static const routeName = '/list-movie';
   final FilterType moviesType;
 
   const ListMoviesPage({super.key, required this.moviesType});
 
   @override
-  _ListMoviesPageState createState() => _ListMoviesPageState();
+  ListMoviesPageState createState() => ListMoviesPageState();
 }
 
-class _ListMoviesPageState extends State<ListMoviesPage> {
+class ListMoviesPageState extends State<ListMoviesPage> {
   late String _title;
   late HomeMovieBloc _homeMovieBloc;
 

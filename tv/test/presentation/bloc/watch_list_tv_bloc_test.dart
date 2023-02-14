@@ -46,7 +46,7 @@ void main() {
       'should return error when data is unsuccessful',
       build: () {
         when(() => mockGetWatchListTv.execute())
-            .thenAnswer((realInvocation) async => Left(DatabaseFailure("Can't get data")));
+            .thenAnswer((realInvocation) async => const Left(DatabaseFailure("Can't get data")));
         return watchListTvBloc;
       },
       act: (bloc) => bloc.add(OnLoadWatchListTv()),

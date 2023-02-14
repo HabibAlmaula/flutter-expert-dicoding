@@ -29,7 +29,7 @@ class MovieListHome extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: (movie.posterPath == "null")
                       ? "https://www.unas.ac.id/wp-content/uploads/2021/08/placeholder-17.png"
-                      : '$BASE_IMAGE_URL/${movie.posterPath}',
+                      : '$baseImageUrl/${movie.posterPath}',
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),

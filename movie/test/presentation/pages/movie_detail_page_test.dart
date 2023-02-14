@@ -28,7 +28,7 @@ void main() {
     );
   }
 
-  final movieDetail = testMovieDetail;
+  const movieDetail = testMovieDetail;
   final id = movieDetail.id;
 
   testWidgets('Page should display center progress bar when loading',

@@ -14,7 +14,7 @@ import 'package:tv/presentation/pages/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'bloc/detail_tv_bloc.dart';
 
 class TvDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail-tv/:id';
+  static const routeName = '/detail-tv/:id';
 
   final int id;
 

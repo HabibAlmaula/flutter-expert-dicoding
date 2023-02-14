@@ -61,7 +61,7 @@ void main() {
       'Should emit [Loading, Error] when get searcg is unsuccessfully',
       build: () {
         when(() => mockSearchTv.execute(tQuery)).thenAnswer(
-            (realInvocation) async => Left(ServerFailure('Server Failure')));
+            (realInvocation) async => const Left(ServerFailure('Server Failure')));
         return searchTvBloc;
       },
       act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),

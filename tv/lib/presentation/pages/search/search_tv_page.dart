@@ -6,7 +6,7 @@ import '../../widgets/tv_card_list.dart';
 import 'bloc/search_tv_bloc.dart';
 
 class SearchTvPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search-tv';
+  static const routeName = '/search-tv';
 
   const SearchTvPage({super.key});
 
