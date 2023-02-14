@@ -1,9 +1,9 @@
 import 'package:ditonton/common/app_enum.dart';
-import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
@@ -13,26 +13,22 @@ class WatchlistMoviesPage extends StatefulWidget {
   _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
 }
 
-class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
-    with RouteAware {
+class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> with WidgetsBindingObserver{
   late WatchListMovieBloc _watchListMovieBloc;
 
   @override
   void initState() {
-    super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _watchListMovieBloc = context.read<WatchListMovieBloc>();
     Future.microtask(() => _watchListMovieBloc.add(OnLoadWatchListMovie()));
+    super.initState();
   }
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
-  void didPopNext() {
-    Future.microtask(() => _watchListMovieBloc.add(OnLoadWatchListMovie()));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +76,10 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
       ),
     );
   }
-
   @override
-  void dispose() {
-    routeObserver.unsubscribe(this);
-    super.dispose();
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _watchListMovieBloc.add(OnLoadWatchListMovie());
+    }
   }
 }
