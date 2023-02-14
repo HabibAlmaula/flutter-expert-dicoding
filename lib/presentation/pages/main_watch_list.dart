@@ -1,6 +1,6 @@
-import 'package:ditonton/presentation/pages/movie/watch_list/watchlist_movies_page.dart';
-import 'package:ditonton/presentation/pages/tv/watch_list/watchlist_tv_page.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/presentation/pages/watch_list/watchlist_movies_page.dart';
+import 'package:tv/presentation/pages/watch_list/watchlist_tv_page.dart';
 
 class MainWatchListPage extends StatefulWidget {
   const MainWatchListPage({Key? key}) : super(key: key);

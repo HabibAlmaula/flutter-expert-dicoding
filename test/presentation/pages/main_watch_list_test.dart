@@ -1,13 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:ditonton/presentation/pages/main_watch_list.dart';
-import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
-import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:movie/presentation/pages/watch_list/bloc/watch_list_movie_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:tv/presentation/pages/watch_list/bloc/watch_list_tv_bloc.dart';
 
 class MockWatchListMovieBloc
     extends MockBloc<WatchListMovieEvent, WatchListMovieState>

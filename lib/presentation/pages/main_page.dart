@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
+import 'package:ditonton/presentation/widgets/exit_dialog.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
   static const routeName = '/main-page';
 
-   MainPage({Key? key}) : super(key: key);
+  MainPage({Key? key}) : super(key: key);
   final _innerRouterKey = GlobalKey<AutoTabsRouterPageViewState>();
 
   @override
@@ -21,28 +22,38 @@ class MainPage extends StatelessWidget {
       ],
       builder: (context, child, _) {
         final tabsRouter = AutoTabsRouter.of(context);
-        return Scaffold(
-            body: child,
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: tabsRouter.activeIndex,
-              selectedItemColor: Colors.purple,
-              onTap: (index) {
-                tabsRouter.setActiveIndex(index);
-              },
-              items: [
-                BottomNavigationBarItem(
-                    label: 'Movie',
-                    icon: Icon(
-                      Icons.movie,
-                    )),
-                BottomNavigationBarItem(label: 'Tv', icon: Icon(Icons.tv)),
-                BottomNavigationBarItem(
-                    label: 'Watchlist', icon: Icon(Icons.favorite)),
-                BottomNavigationBarItem(
-                    label: 'About', icon: Icon(Icons.info)),
-              ],
-            ));
+        return WillPopScope(
+          onWillPop: () async {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return ExitAlertDialog();
+                });
+            return false;
+          },
+          child: Scaffold(
+              body: child,
+              bottomNavigationBar: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                currentIndex: tabsRouter.activeIndex,
+                selectedItemColor: Colors.purple,
+                onTap: (index) {
+                  tabsRouter.setActiveIndex(index);
+                },
+                items: [
+                  BottomNavigationBarItem(
+                      label: 'Movie',
+                      icon: Icon(
+                        Icons.movie,
+                      )),
+                  BottomNavigationBarItem(label: 'Tv', icon: Icon(Icons.tv)),
+                  BottomNavigationBarItem(
+                      label: 'Watchlist', icon: Icon(Icons.favorite)),
+                  BottomNavigationBarItem(
+                      label: 'About', icon: Icon(Icons.info)),
+                ],
+              )),
+        );
       },
     );
   }

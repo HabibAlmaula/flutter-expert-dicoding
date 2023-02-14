@@ -1,23 +1,22 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:core/core.dart';
 import 'package:ditonton/bloc_observer.dart';
-import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/firebase_options.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:ditonton/presentation/pages/movie/detail/bloc/detail_movie_bloc.dart';
-import 'package:ditonton/presentation/pages/movie/home/bloc/home_movie_bloc.dart';
-import 'package:ditonton/presentation/pages/movie/search/bloc/search_movie_bloc.dart';
-import 'package:ditonton/presentation/pages/movie/watch_list/bloc/watch_list_movie_bloc.dart';
-import 'package:ditonton/presentation/pages/tv/detail/bloc/detail_tv_bloc.dart';
-import 'package:ditonton/presentation/pages/tv/home/bloc/home_tv_bloc.dart';
-import 'package:ditonton/presentation/pages/tv/search/bloc/search_tv_bloc.dart';
-import 'package:ditonton/presentation/pages/tv/watch_list/bloc/watch_list_tv_bloc.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:ditonton/presentation/route/app_router_observer.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie/presentation/pages/detail/bloc/detail_movie_bloc.dart';
+import 'package:movie/presentation/pages/home/bloc/home_movie_bloc.dart';
+import 'package:movie/presentation/pages/search/bloc/search_movie_bloc.dart';
+import 'package:movie/presentation/pages/watch_list/bloc/watch_list_movie_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:tv/presentation/pages/detail/bloc/detail_tv_bloc.dart';
+import 'package:tv/presentation/pages/home/bloc/home_tv_bloc.dart';
+import 'package:tv/presentation/pages/search/bloc/search_tv_bloc.dart';
+import 'package:tv/presentation/pages/watch_list/bloc/watch_list_tv_bloc.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

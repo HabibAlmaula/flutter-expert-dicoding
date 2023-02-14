@@ -1,0 +1,28 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "backdrop_path": "/ciToI1GfkWmzavJIPXh9Xe0Neon.jpg",
+      "first_air_date": "2019-02-15",
+      "genre_ids": [
+        10759,
+        10765,
+        18
+      ],
+      "id": 75006,
+      "name": "The Umbrella Academy",
+      "origin_country": [
+        "US"
+      ],
+      "original_language": "en",
+      "original_name": "The Umbrella Academy",
+      "overview": "A dysfunctional family of superheroes comes together to solve the mystery of their father's death, the threat of the apocalypse and more.",
+      "popularity": 1577.649,
+      "poster_path": "/scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg",
+      "vote_average": 8.7,
+      "vote_count": 7926
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 6
+}
