@@ -62,7 +62,8 @@ class _ListMoviesPageState extends State<ListMoviesPage> {
                         RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return MovieCard(state.nowPlayingMovies[index]);
+                          return MovieCard(
+                              movie: state.nowPlayingMovies[index]);
                         },
                         itemCount: state.nowPlayingMovies.length,
                       );
@@ -80,7 +81,7 @@ class _ListMoviesPageState extends State<ListMoviesPage> {
                     } else if (state.popularMovieState == RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return MovieCard(state.popularMovies[index]);
+                          return MovieCard(movie: state.popularMovies[index]);
                         },
                         itemCount: state.popularMovies.length,
                       );
@@ -99,7 +100,7 @@ class _ListMoviesPageState extends State<ListMoviesPage> {
                         RequestState.Loaded) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          return MovieCard(state.topRatedMovies[index]);
+                          return MovieCard(movie: state.topRatedMovies[index]);
                         },
                         itemCount: state.topRatedMovies.length,
                       );

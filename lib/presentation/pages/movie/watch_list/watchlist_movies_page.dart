@@ -60,7 +60,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> with WidgetsB
                 return ListView.builder(
                   itemBuilder: (context, index) {
                     final movie = state.movies[index];
-                    return MovieCard(movie);
+                    return MovieCard(movie:movie);
                   },
                   itemCount: state.movies.length,
                 );

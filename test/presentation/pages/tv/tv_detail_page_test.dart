@@ -31,8 +31,8 @@ void main() {
     );
   }
 
-  final TvDetail = testTvDetail;
-  final id = TvDetail.id;
+  final tvDetail = testTvDetail;
+  final id = tvDetail.id;
 
   testWidgets('Page should display center progress bar when loading',
           (WidgetTester tester) async {
