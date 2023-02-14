@@ -1,18 +1,19 @@
+library app_router;
+import 'package:about/about_page.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:ditonton/common/app_enum.dart';
-import 'package:ditonton/presentation/pages/about_page.dart';
+import 'package:core/core.dart';
 import 'package:ditonton/presentation/pages/main_page.dart';
 import 'package:ditonton/presentation/pages/main_watch_list.dart';
-import 'package:ditonton/presentation/pages/movie/home/home_movie_page.dart';
-import 'package:ditonton/presentation/pages/movie/detail/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/movie/list_movie/list_movies_page.dart';
-import 'package:ditonton/presentation/pages/movie/search/search_page.dart';
 import 'package:ditonton/presentation/pages/splash_page.dart';
-import 'package:ditonton/presentation/pages/tv/home/home_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/list_tv/list_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/search/search_tv_page.dart';
-import 'package:ditonton/presentation/pages/tv/detail/tv_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/presentation/pages/detail/movie_detail_page.dart';
+import 'package:movie/presentation/pages/home/home_movie_page.dart';
+import 'package:movie/presentation/pages/list_movie/list_movies_page.dart';
+import 'package:movie/presentation/pages/search/search_page.dart';
+import 'package:tv/presentation/pages/detail/tv_detail_page.dart';
+import 'package:tv/presentation/pages/home/home_tv_page.dart';
+import 'package:tv/presentation/pages/list_tv/list_tv_page.dart';
+import 'package:tv/presentation/pages/search/search_tv_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -73,11 +74,13 @@ part 'app_router.gr.dart';
     page: SearchTvPage,
   ),
   AutoRoute(
+    maintainState: false,
     usesPathAsKey: true,
     path: MovieDetailPage.ROUTE_NAME,
     page: MovieDetailPage,
   ),
   AutoRoute(
+    maintainState: false,
     usesPathAsKey: true,
     path: TvDetailPage.ROUTE_NAME,
     page: TvDetailPage,

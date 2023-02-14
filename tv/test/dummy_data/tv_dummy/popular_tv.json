@@ -1,0 +1,28 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "backdrop_path": "/path.jpg",
+      "first_air_date": "2022-02-02",
+      "genre_ids": [
+        1,
+        2,
+        3
+      ],
+      "id": 1,
+      "name": "name",
+      "origin_country": [
+        "c"
+      ],
+      "original_language": "c",
+      "original_name": "name",
+      "overview": "overview",
+      "popularity": 1.1,
+      "poster_path": "/path.jpg",
+      "vote_average": 1.5,
+      "vote_count": 1
+    }
+  ],
+  "total_pages": 6717,
+  "total_results": 134328
+}

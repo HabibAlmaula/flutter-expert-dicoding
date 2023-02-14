@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ExitAlertDialog extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class ExitAlertDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            SystemNavigator.pop();
           },
           child: Text('Exit'),
         ),
