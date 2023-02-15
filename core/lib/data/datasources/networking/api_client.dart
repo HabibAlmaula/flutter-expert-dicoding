@@ -9,7 +9,7 @@ import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:retrofit/retrofit.dart' hide Headers;
+import 'package:retrofit/retrofit.dart';
 
 import 'endpoints.dart';
 
@@ -18,7 +18,6 @@ part 'api_client.g.dart';
 @RestApi(baseUrl: Endpoint.BASE_URL)
 abstract class ApiClient {
   factory ApiClient({required Dio dio}) {
-    dio.options.contentType = Headers.jsonContentType;
     dio.options.connectTimeout = const Duration(seconds: 15);
     dio.options.receiveTimeout = const Duration(seconds: 15);
 
@@ -37,10 +36,10 @@ abstract class ApiClient {
     * */
     const fingerPrint =
         "e0f690bbe9d9518a42a68402d87f4485ec38f8a3d34d905feef72cd7fbb95208";
-
     //fake from google.com
     const fakeFingerPrint =
         "51e9015ffefb7970d8df74bb46946372b1e32b316a46f0c536e7c1d4ddc5b270";
+
     //ssl pinning
     dio.httpClientAdapter = IOHttpClientAdapter()
       ..onHttpClientCreate = (_) {
