@@ -1,25 +1,26 @@
 // coverage:ignore-file
 import 'dart:io';
+
 import 'package:core/data/models/movie_detail_model.dart';
 import 'package:core/data/models/movie_response.dart';
 import 'package:core/data/models/tv/tv_detail_model.dart';
 import 'package:core/data/models/tv/tv_response.dart';
-import 'package:dio/adapter.dart';
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/services.dart';
+import 'package:dio/io.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
+
 import 'endpoints.dart';
 
 part 'api_client.g.dart';
 
 @RestApi(baseUrl: Endpoint.BASE_URL)
 abstract class ApiClient {
-  factory ApiClient({required Dio dio, required ByteData cert}) {
-    dio.options =
-        BaseOptions(receiveTimeout: 15000, connectTimeout: 15000, headers: {
-      "Content-Type": "application/json",
-    });
+  factory ApiClient({required Dio dio}) {
+    dio.options.connectTimeout = const Duration(seconds: 15);
+    dio.options.receiveTimeout = const Duration(seconds: 15);
+
     dio.interceptors.add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
@@ -28,13 +29,37 @@ abstract class ApiClient {
         error: true,
         compact: true,
         maxWidth: 90));
-    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate  = (client) {
-      SecurityContext sc = SecurityContext();
-      //file is the path of certificate
-      sc.setTrustedCertificatesBytes(cert.buffer.asInt8List());
-      HttpClient httpClient = HttpClient(context: sc);
-      return httpClient;
-    };
+
+    /* this fingerprint came from this command, based on dio documentation
+    * openssl s_client -servername themoviedb.org -connect themoviedb.org:443 < /dev/null 2>/dev/null \
+  | openssl x509 -noout -fingerprint -sha256
+    * */
+    const fingerPrint =
+        "e0f690bbe9d9518a42a68402d87f4485ec38f8a3d34d905feef72cd7fbb95208";
+    //fake from google.com
+    const fakeFingerPrint =
+        "51e9015ffefb7970d8df74bb46946372b1e32b316a46f0c536e7c1d4ddc5b270";
+
+    //ssl pinning
+    dio.httpClientAdapter = IOHttpClientAdapter()
+      ..onHttpClientCreate = (_) {
+        // Don't trust any certificate just because their root cert is trusted.
+        final HttpClient client =
+            HttpClient(context: SecurityContext(withTrustedRoots: false));
+        // You can test the intermediate / root cert here. We just ignore it.
+        client.badCertificateCallback = (cert, host, port) => true;
+        return client;
+      }
+      ..validateCertificate = (cert, host, port) {
+        // Check that the cert fingerprint matches the one we expect.
+        // We definitely require _some_ certificate.
+        if (cert == null) {
+          return false;
+        }
+        // Validate it any way you want. Here we only check that
+        // the fingerprint matches the OpenSSL SHA256.
+        return fingerPrint == sha256.convert(cert.der).toString();
+      };
     return _ApiClient(dio);
   }
 

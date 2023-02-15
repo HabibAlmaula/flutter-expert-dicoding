@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:core/common/constants.dart';
 import 'package:core/data/datasources/db/database_helper.dart';
 import 'package:core/data/datasources/movie_local_data_source.dart';
 import 'package:core/data/datasources/movie_remote_data_source.dart';
@@ -165,9 +162,6 @@ void init() {
   //***** EXTERNAL ****
   //dio
   locator.registerLazySingleton(() => Dio());
-  //cert
-  locator.registerSingletonAsync<ByteData>(
-      () async => await AppConstant().loadCert());
   locator.registerLazySingleton<ApiClient>(
-      () => ApiClient(dio: locator(), cert: locator()));
+      () => ApiClient(dio: locator()));
 }

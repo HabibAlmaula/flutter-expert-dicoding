@@ -24,7 +24,6 @@ void main() async{
     options: DefaultFirebaseOptions.currentPlatform,
   );
   di.init();
-  await di.locator.allReady();
   Bloc.observer = HomeObserver();
   runApp(MyApp());
 }
