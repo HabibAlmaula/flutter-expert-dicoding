@@ -25,11 +25,13 @@ dependencies:
 
 dev_dependencies:
   mocktail: ^0.3.0
-  build_runner: ^2.3.3
+  build_runner: '>=2.3.0 <4.0.0'
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.1
   retrofit_generator: '>=5.0.0 <6.0.0'
+  json_serializable: ^6.6.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
