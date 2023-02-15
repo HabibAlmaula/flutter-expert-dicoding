@@ -49,10 +49,4 @@ class AppConstant {
     onError: Colors.white,
     brightness: Brightness.dark,
   );
-
-  FutureOr<ByteData> loadCert() {
-    // final sslCert = rootBundle.load('assets/certs/fake_cert.pem');
-    final sslCert = rootBundle.load('assets/certs/cert.pem');
-    return sslCert;
-  }
 }

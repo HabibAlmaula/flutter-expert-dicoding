@@ -26,16 +26,22 @@ class DatabaseFailure extends Failure {
 String dioErr({required DioError error, String? message}) {
   String errorMessage = '';
   switch (error.type) {
-    case DioErrorType.connectTimeout:
-      errorMessage = "Connection timeout";
-      break;
     case DioErrorType.sendTimeout:
       errorMessage = "Receive timeout in send request";
       break;
     case DioErrorType.receiveTimeout:
       errorMessage = "Receive timeout in connection";
       break;
-    case DioErrorType.response:
+    case DioErrorType.cancel:
+      errorMessage = "Request was cancelled";
+      break;
+    case DioErrorType.connectionTimeout:
+      errorMessage = "Connection timeout";
+      break;
+    case DioErrorType.badCertificate:
+      errorMessage = "Invalid Certificate";
+      break;
+    case DioErrorType.badResponse:
       List<int> err = [400, 401, 403, 404];
       if (err.contains(error.response?.statusCode)) {
         errorMessage = message ??
@@ -44,11 +50,11 @@ String dioErr({required DioError error, String? message}) {
         errorMessage = "unknown server error";
       }
       break;
-    case DioErrorType.cancel:
-      errorMessage = "Request was cancelled";
+    case DioErrorType.connectionError:
+      errorMessage = "Connection Error";
       break;
-    case DioErrorType.other:
-      errorMessage = "Connection failed due to internet connection";
+    case DioErrorType.unknown:
+      errorMessage = "Unknown Error";
       break;
   }
 

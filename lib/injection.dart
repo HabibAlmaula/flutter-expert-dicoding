@@ -165,9 +165,6 @@ void init() {
   //***** EXTERNAL ****
   //dio
   locator.registerLazySingleton(() => Dio());
-  //cert
-  locator.registerSingletonAsync<ByteData>(
-      () async => await AppConstant().loadCert());
   locator.registerLazySingleton<ApiClient>(
-      () => ApiClient(dio: locator(), cert: locator()));
+      () => ApiClient(dio: locator()));
 }
