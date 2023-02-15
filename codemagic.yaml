@@ -9,6 +9,8 @@ workflows:
       flutter: stable   # Define the channel name or version (e.g. v1.13.4)
       xcode: latest     # Define latest, edge or version (e.g. 11.2)
       cocoapods: default  # Define default or version
+      groups:
+        - codecov_credentials
     cache:
       cache_paths:
         - ~/.pub-cache
@@ -25,5 +27,24 @@ workflows:
       - name: Flutter test
         script: flutter test
         ignore_failure: false
+      - name: Create voverage report
+        script: |
+          HOMEBREW_NO_AUTO_UPDATE=1 brew install lcov
+          mkdir -p test-results
+          flutter test --coverage --machine > test-results/flutter.json
+          
+          code_coverage=$(lcov --list $CM_BUILD_DIR/coverage/lcov.info | sed -n "s/.*Total:|\(.*\)%.*/\1/p")
+          
+          echo "Code Coverage: ${code_coverage}% "
+          if (( $(echo "$code_coverage < $CODE_COVERAGE_TARGET" | bc) ))
+          then { echo "code coverage is less than expected" && exit 1; }
+          fi
+        test_report: test-results/flutter.json
+      - name: Codecov upload
+        script: |
+          curl -Os https://uploader.codecov.io/latest/macos/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN}
+
     artifacts:
       - build/**/outputs/apk/**/*.apk
