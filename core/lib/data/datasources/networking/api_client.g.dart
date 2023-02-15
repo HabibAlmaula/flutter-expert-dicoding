@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
 part of 'api_client.dart';
-
+// coverage:ignore-file
 // **************************************************************************
 // RetrofitGenerator
 // **************************************************************************
