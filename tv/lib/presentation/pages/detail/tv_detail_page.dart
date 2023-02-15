@@ -156,7 +156,8 @@ class DetailContent extends StatelessWidget {
                                     RatingBarIndicator(
                                       rating: tv.voteAverage / 2,
                                       itemCount: 5,
-                                      itemBuilder: (context, index) => const Icon(
+                                      itemBuilder: (context, index) =>
+                                          const Icon(
                                         Icons.star,
                                         color: AppConstant.kMikadoYellow,
                                       ),
@@ -215,8 +216,9 @@ class DetailContent extends StatelessWidget {
                                                 onTap: () {
                                                   Logger().i(
                                                       "RECOMMENDATION_CLICKED");
-                                                context.pushRoute(TvDetailRoute(id: tv.id));
-                                                  },
+                                                  context.pushRoute(
+                                                      TvDetailRoute(id: tv.id));
+                                                },
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       const BorderRadius.all(
@@ -233,9 +235,9 @@ class DetailContent extends StatelessWidget {
                                                       child:
                                                           CircularProgressIndicator(),
                                                     ),
-                                                    errorWidget:
-                                                        (context, url, error) =>
-                                                            const Icon(Icons.error),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   ),
                                                 ),
                                               ),
@@ -339,7 +341,7 @@ class DetailContent extends StatelessWidget {
                     style: AppConstant.kHeading6.copyWith(color: Colors.black),
                   ),
                   Text(
-                    "${DateFormat("yyyy").format(DateTime.parse(season.airDate))} | ${season.episodeCount} Episodes",
+                    "${(season.airDate == "null" ? "unknown" : DateFormat('yyyy').parse(season.airDate))} | ${season.episodeCount} Episodes",
                     style: const TextStyle(color: Colors.black),
                   ),
                   const SizedBox(
