@@ -71,6 +71,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/raw/splash.json
+    - assets/raw/no_data.json
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see

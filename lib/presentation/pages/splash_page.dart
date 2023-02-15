@@ -25,7 +25,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          "assets/raw/animation2.json",
+          "assets/raw/splash.json",
           width: MediaQuery.of(context).size.width / 3,
           height: MediaQuery.of(context).size.width / 3,
         ),
