@@ -341,7 +341,7 @@ class DetailContent extends StatelessWidget {
                     style: AppConstant.kHeading6.copyWith(color: Colors.black),
                   ),
                   Text(
-                    "${(season.airDate == "null" ? "unknown" : DateFormat('yyyy').parse(season.airDate))} | ${season.episodeCount} Episodes",
+                    "${(season.airDate == "null" ? "unknown" : DateFormat('yyyy').format(DateTime.parse("1994-05-08")))} | ${season.episodeCount} Episodes",
                     style: const TextStyle(color: Colors.black),
                   ),
                   const SizedBox(
