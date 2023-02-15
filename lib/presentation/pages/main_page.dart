@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:auto_route/auto_route.dart';
 import 'package:ditonton/presentation/route/app_router.dart';
 import 'package:ditonton/presentation/widgets/exit_dialog.dart';
